@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
           <ul className="space-y-3 text-sm">
             <li className="flex items-center gap-2">
               <div className="bg-slate-800 p-2 rounded-full"><MessageCircleWrapper /></div>
-              <span>(11) 99999-9999</span>
+              <span>(11) 98781-4483</span>
             </li>
             <li className="flex items-center gap-2">
               <div className="bg-slate-800 p-2 rounded-full"><Mail size={16} /></div>

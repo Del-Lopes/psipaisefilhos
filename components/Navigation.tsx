@@ -43,7 +43,7 @@ const Navigation: React.FC = () => {
             </a>
           ))}
           <a 
-            href="https://wa.me/5511999999999" // Placeholder number
+            href="https://wa.me/5511987814483" // Updated number
             target="_blank"
             rel="noopener noreferrer"
             className="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2 rounded-full font-semibold transition-all text-sm shadow-lg hover:shadow-xl"
@@ -75,7 +75,7 @@ const Navigation: React.FC = () => {
             </a>
           ))}
           <a 
-            href="https://wa.me/5511999999999"
+            href="https://wa.me/5511987814483"
             className="bg-primary-600 text-white text-center py-3 rounded-lg font-bold"
             onClick={() => setIsMobileMenuOpen(false)}
           >

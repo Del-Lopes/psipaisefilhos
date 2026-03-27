@@ -24,7 +24,7 @@ const Hero: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row gap-4">
             <a 
-              href="https://wa.me/5511999999999"
+              href="https://wa.me/5511987814483"
               className="group flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-primary-500/30 transition-all duration-300 transform hover:-translate-y-1"
             >
               Agendar Avaliação Inicial
