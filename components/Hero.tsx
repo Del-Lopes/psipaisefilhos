@@ -12,12 +12,12 @@ const Hero: React.FC = () => {
             Psicologia Infantil & Neurodivergências
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-700 leading-tight">
             Cuidado Especializado para <span className="text-primary-600">Pequenas Mentes</span>, <br className="hidden md:block" />
             <span className="text-accent-400">Grandes Futuros.</span>
           </h1>
           
-          <p className="text-lg text-slate-600 md:pr-10 leading-relaxed">
+          <p className="text-lg text-secondary-500 md:pr-10 leading-relaxed">
             Intervenção precoce baseada em evidências para transformar o desenvolvimento do seu filho.
             Acolhimento profissional para neurodivergências, traumas e desafios emocionais.
           </p>
@@ -32,7 +32,7 @@ const Hero: React.FC = () => {
             </a>
             <a 
               href="#specialty"
-              className="flex items-center justify-center px-8 py-4 rounded-xl border-2 border-slate-200 text-slate-700 font-semibold hover:border-primary-600 hover:text-primary-600 transition-colors"
+              className="flex items-center justify-center px-8 py-4 rounded-xl border-2 border-secondary-200 text-secondary-600 font-semibold hover:border-primary-500 hover:text-primary-500 transition-colors"
             >
               Conhecer Especialidades
             </a>
@@ -53,11 +53,11 @@ const Hero: React.FC = () => {
             
             {/* Floating Card */}
             <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-lg border border-white/50">
-              <p className="text-sm font-serif italic text-slate-700">
+              <p className="text-sm font-serif italic text-secondary-600">
                 "O desenvolvimento infantil não espera. A intervenção correta hoje define o adulto de amanhã."
               </p>
               <p className="text-xs font-bold text-primary-600 mt-2 uppercase tracking-wider">
-                — Psi Pais e Filhos
+                — Psi Bárbara Carvalho
               </p>
             </div>
           </div>

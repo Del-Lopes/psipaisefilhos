@@ -1,0 +1,20 @@
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import Navigation from './Navigation';
+import Footer from './Footer';
+import StickyCTA from './StickyCTA';
+
+const Layout: React.FC = () => {
+  return (
+    <div className="antialiased text-secondary-700 bg-warm-50 selection:bg-primary-200 selection:text-primary-900">
+      <Navigation />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+      <StickyCTA />
+    </div>
+  );
+};
+
+export default Layout;

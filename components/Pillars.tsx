@@ -43,10 +43,10 @@ const Pillars: React.FC = () => {
           <h2 className="text-primary-600 font-bold uppercase tracking-widest text-sm mb-3">
             Por que buscar terapia?
           </h2>
-          <h3 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 mb-6">
+          <h3 className="text-3xl md:text-4xl font-serif font-bold text-secondary-700 mb-6">
             As 5 Colunas do Desenvolvimento Infantil
           </h3>
-          <p className="text-slate-600 text-lg">
+          <p className="text-secondary-500 text-lg">
             A infância é a janela de oportunidade mais crítica da vida. Atuamos em cinco frentes essenciais para garantir um crescimento saudável.
           </p>
         </div>
@@ -60,13 +60,13 @@ const Pillars: React.FC = () => {
               <div className="w-14 h-14 bg-white rounded-xl shadow-sm flex items-center justify-center text-primary-600 mb-6 group-hover:scale-110 transition-transform duration-300">
                 <pillar.icon size={32} />
               </div>
-              <h4 className="text-xl font-bold text-slate-800 mb-2 font-serif">
+              <h4 className="text-xl font-bold text-secondary-700 mb-2 font-serif">
                 {pillar.title}
               </h4>
               <p className="text-sm font-semibold text-accent-400 mb-4 uppercase tracking-wide">
                 {pillar.subtitle}
               </p>
-              <p className="text-slate-600 leading-relaxed">
+              <p className="text-secondary-500 leading-relaxed">
                 {pillar.description}
               </p>
             </div>

@@ -10,26 +10,26 @@ const Bio: React.FC = () => {
           <div className="md:w-2/5 relative min-h-[400px]">
             <img 
               src="https://picsum.photos/500/700" // Placeholder for Portrait
-              alt="Psi Pais e Filhos" 
+              alt="Psi Bárbara Carvalho" 
               className="absolute inset-0 w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent md:hidden"></div>
             <div className="absolute bottom-6 left-6 text-white md:hidden">
-              <p className="font-bold text-xl uppercase tracking-wider">Psi Pais e Filhos</p>
+              <p className="font-bold text-xl uppercase tracking-wider">Psi Bárbara Carvalho</p>
               <p className="text-sm opacity-90">Psicóloga Infantil</p>
             </div>
           </div>
 
           {/* Text Section */}
           <div className="md:w-3/5 p-10 md:p-14 flex flex-col justify-center">
-            <h2 className="text-3xl font-serif font-bold text-slate-800 mb-2">
-              Psi Pais e Filhos
+            <h2 className="text-3xl font-serif font-bold text-secondary-700 mb-2">
+              Psi Bárbara Carvalho
             </h2>
             <h3 className="text-primary-600 font-semibold mb-6 uppercase tracking-wider text-sm">
               Psicologia Infantil e Parental
             </h3>
 
-            <div className="space-y-6 text-slate-600 leading-relaxed">
+            <div className="space-y-6 text-secondary-500 leading-relaxed">
               <p>
                 Com uma formação sólida em <strong>Psicologia pela Universidade Presbiteriana Mackenzie</strong>, uma das instituições mais tradicionais e respeitadas do país, a atuação da nossa equipe é dedicada a desvendar os mistérios da mente infantil.
               </p>
@@ -41,7 +41,7 @@ const Bio: React.FC = () => {
               </p>
             </div>
 
-            <div className="mt-8 pt-8 border-t border-slate-200">
+            <div className="mt-8 pt-8 border-t border-secondary-100">
               <img 
                 src="https://picsum.photos/200/80" // Placeholder for signature or Mackenzie logo
                 alt="Mackenzie Logo" 

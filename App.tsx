@@ -1,29 +1,19 @@
 import React from 'react';
-import Navigation from './components/Navigation';
-import Hero from './components/Hero';
-import Pillars from './components/Pillars';
-import FutureImpact from './components/FutureImpact';
-import Specialty from './components/Specialty';
-import Bio from './components/Bio';
-import Footer from './components/Footer';
-import StickyCTA from './components/StickyCTA';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import Investimento from './pages/Investimento';
 
 const App: React.FC = () => {
   return (
-    <div className="antialiased text-slate-800 bg-warm-50 selection:bg-primary-200 selection:text-primary-900">
-      <Navigation />
-      
-      <main>
-        <Hero />
-        <Pillars />
-        <FutureImpact />
-        <Specialty />
-        <Bio />
-      </main>
-
-      <Footer />
-      <StickyCTA />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/investimento" element={<Investimento />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 

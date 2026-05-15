@@ -3,19 +3,19 @@ import { Instagram, Linkedin, Mail, MapPin } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-slate-900 text-slate-300 py-16">
+    <footer className="bg-secondary-800 text-secondary-100 py-16">
       <div className="container mx-auto px-6 md:px-12 grid md:grid-cols-3 gap-12">
         
         {/* Brand */}
         <div>
-          <h4 className="text-2xl font-serif font-bold text-white mb-4">Psi Pais e Filhos</h4>
+          <h4 className="text-2xl font-serif font-bold text-white mb-4">Psi Bárbara Carvalho</h4>
           <p className="text-sm leading-relaxed opacity-80 mb-6">
             Psicologia Infantil e Neurodivergências.<br/>
             Cuidado ético, técnico e humanizado para o desenvolvimento do seu filho.
           </p>
           <div className="flex gap-4">
-            <a href="#" className="hover:text-primary-400 transition-colors"><Instagram size={20} /></a>
-            <a href="#" className="hover:text-primary-400 transition-colors"><Linkedin size={20} /></a>
+            <a href="#" className="hover:text-primary-300 transition-colors"><Instagram size={20} /></a>
+            <a href="#" className="hover:text-primary-300 transition-colors"><Linkedin size={20} /></a>
           </div>
         </div>
 
@@ -42,16 +42,16 @@ const Footer: React.FC = () => {
         <div>
           <h5 className="text-white font-bold mb-4 uppercase tracking-wider text-sm">Menu</h5>
           <ul className="space-y-2 text-sm">
-            <li><a href="#hero" className="hover:text-primary-400 transition-colors">Início</a></li>
-            <li><a href="#pillars" className="hover:text-primary-400 transition-colors">Desenvolvimento</a></li>
-            <li><a href="#specialty" className="hover:text-primary-400 transition-colors">Neurodivergências</a></li>
-            <li><a href="#bio" className="hover:text-primary-400 transition-colors">Sobre Nós</a></li>
+              <li><a href="#hero" className="hover:text-primary-300 transition-colors">Início</a></li>
+              <li><a href="#pillars" className="hover:text-primary-300 transition-colors">Desenvolvimento</a></li>
+              <li><a href="#specialty" className="hover:text-primary-300 transition-colors">Neurodivergências</a></li>
+              <li><a href="#bio" className="hover:text-primary-300 transition-colors">Sobre Nós</a></li>
           </ul>
         </div>
 
       </div>
-      <div className="border-t border-slate-800 mt-12 pt-8 text-center text-xs opacity-50">
-        &copy; {new Date().getFullYear()} Psi Pais e Filhos. Todos os direitos reservados.
+      <div className="border-t border-secondary-700 mt-12 pt-8 text-center text-xs opacity-50">
+        &copy; {new Date().getFullYear()} Psi Bárbara Carvalho. Todos os direitos reservados.
       </div>
     </footer>
   );

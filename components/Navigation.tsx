@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 const Navigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,11 +16,24 @@ const Navigation: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { label: 'Início', href: '#hero' },
-    { label: 'Desenvolvimento', href: '#pillars' },
-    { label: 'Especialidade', href: '#specialty' },
-    { label: 'Sobre Nós', href: '#bio' },
+    { label: 'Início', href: '/#hero' },
+    { label: 'Desenvolvimento', href: '/#pillars' },
+    { label: 'Especialidade', href: '/#specialty' },
+    { label: 'Sobre Nós', href: '/#bio' },
   ];
+
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (location.pathname !== '/') {
+      return;
+    }
+    e.preventDefault();
+    const id = href.replace('/#', '');
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <nav 
@@ -27,9 +42,9 @@ const Navigation: React.FC = () => {
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <div className="font-serif font-bold text-xl md:text-2xl text-primary-700 uppercase tracking-tight">
-          Psi Pais e Filhos
-        </div>
+        <Link to="/" className="font-serif font-bold text-xl md:text-2xl text-primary-700 uppercase tracking-tight">
+          Psi Bárbara Carvalho
+        </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8">
@@ -37,16 +52,17 @@ const Navigation: React.FC = () => {
             <a 
               key={link.label}
               href={link.href}
-              className="text-slate-600 hover:text-primary-600 font-medium transition-colors text-sm uppercase tracking-wide"
+              onClick={(e) => handleAnchorClick(e, link.href)}
+              className="text-secondary-600 hover:text-primary-500 font-medium transition-colors text-sm uppercase tracking-wide"
             >
               {link.label}
             </a>
           ))}
           <a 
-            href="https://wa.me/5511987814483" // Updated number
+            href="https://wa.me/5511987814483"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2 rounded-full font-semibold transition-all text-sm shadow-lg hover:shadow-xl"
+            className="bg-primary-500 hover:bg-primary-600 text-white px-5 py-2 rounded-full font-semibold transition-all text-sm shadow-lg hover:shadow-xl"
           >
             Agendar Consulta
           </a>
@@ -54,7 +70,7 @@ const Navigation: React.FC = () => {
 
         {/* Mobile Toggle */}
         <button 
-          className="md:hidden text-slate-700"
+          className="md:hidden text-secondary-700"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -68,15 +84,15 @@ const Navigation: React.FC = () => {
             <a 
               key={link.label}
               href={link.href}
-              className="text-slate-700 font-medium text-lg"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={(e) => handleAnchorClick(e, link.href)}
+              className="text-secondary-700 font-medium text-lg"
             >
               {link.label}
             </a>
           ))}
           <a 
             href="https://wa.me/5511987814483"
-            className="bg-primary-600 text-white text-center py-3 rounded-lg font-bold"
+            className="bg-primary-500 text-white text-center py-3 rounded-lg font-bold"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Agendar pelo WhatsApp
