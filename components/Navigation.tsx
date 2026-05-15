@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Heart } from 'lucide-react';
 
 const Navigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,8 +42,11 @@ const Navigation: React.FC = () => {
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <Link to="/" className="font-serif font-bold text-xl md:text-2xl text-secondary-600">
-          Bárbara Carvalho
+        <Link to="/" className="font-serif font-bold text-xl md:text-2xl text-secondary-500 flex items-center gap-2 group">
+          <div className="bg-nature-100 p-1.5 rounded-xl transition-transform group-hover:rotate-12">
+            <Heart size={20} className="text-primary-500 fill-primary-500/20" />
+          </div>
+          <span className="tracking-tight">Bárbara Carvalho</span>
         </Link>
 
         {/* Desktop Menu */}
@@ -62,7 +65,7 @@ const Navigation: React.FC = () => {
             href="https://wa.me/5511987814483"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-secondary-400 hover:bg-secondary-500 text-white px-5 py-2 rounded-full font-semibold transition-all text-sm shadow-lg hover:shadow-xl"
+            className="bg-primary-500 hover:bg-primary-600 text-white px-5 py-2 rounded-full font-bold transition-all text-sm shadow-lg hover:shadow-primary-500/20"
           >
             Agendar Consulta
           </a>
@@ -92,7 +95,7 @@ const Navigation: React.FC = () => {
           ))}
           <a 
             href="https://wa.me/5511987814483"
-            className="bg-secondary-400 text-white text-center py-3 rounded-lg font-bold"
+            className="bg-primary-500 text-white text-center py-3 rounded-xl font-bold shadow-lg"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Agendar pelo WhatsApp

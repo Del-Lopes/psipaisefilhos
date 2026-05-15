@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Psi Bárbara Carvalho | Psicologia Infantil</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="description" content="Especialista em Psicologia Infantil e apoio ao desenvolvimento consciente. Cuidado especializado para o desenvolvimento do seu filho." />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,40 +16,52 @@
           extend: {
             colors: {
               primary: {
-                50: '#FFF5F0',
-                100: '#FFE8DE',
-                200: '#FFD0C0',
-                300: '#FDB195',
-                400: '#FC9A7A',
-                500: '#F97F56',
-                600: '#E86A3F',
-                700: '#C4522E',
-                800: '#9A3D22',
-                900: '#6E2B17',
+                50: '#FEF6F3',
+                100: '#FDECE6',
+                200: '#FBD0C4',
+                300: '#F8B3A1',
+                400: '#F5967E',
+                500: '#F28E6F', // Logo Coral
+                600: '#D97A5C',
+                700: '#B2644B',
+                800: '#8C4F3B',
+                900: '#663A2B',
               },
               secondary: {
-                50: '#F0FAF7',
-                100: '#DFF5EE',
-                200: '#C5EBE1',
-                300: '#9CD7C9',
-                400: '#7BC9B7',
-                500: '#5BB9A3',
-                600: '#FB978F',
-                700: '#FB978F',
-                800: '#286859',
-                900: '#1B4A3F',
+                50: '#F4F6F3',
+                100: '#E9ECEA',
+                200: '#D3D9D5',
+                300: '#BDC6BF',
+                400: '#A7B3AA',
+                500: '#4B5945', // Logo Dark Green
+                600: '#3D4A39',
+                700: '#303A2D',
+                800: '#222B21',
+                900: '#151C15',
               },
               accent: {
-                50: '#FFF9E8',
-                100: '#FFF2D1',
-                200: '#FEE6A8',
-                300: '#FDD173',
-                400: '#FCC54D',
-                500: '#FBB828',
-                600: '#E5A20F',
-                700: '#B8820C',
-                800: '#8B6309',
-                900: '#5E4206',
+                50: '#FFFBF0',
+                100: '#FFF7E1',
+                200: '#FFEDC3',
+                300: '#FFE4A4',
+                400: '#FFDA86',
+                500: '#FFD55D', // Logo Yellow
+                600: '#E5BF54',
+                700: '#B29541',
+                800: '#806A2E',
+                900: '#4D401C',
+              },
+              nature: {
+                50: '#F7F9F1',
+                100: '#EFF2E3',
+                200: '#DCE5C7',
+                300: '#CAD7AB',
+                400: '#B8CA8E',
+                500: '#AEC370', // Logo Light Green
+                600: '#8DA15A',
+                700: '#6C7E46',
+                800: '#4B5731',
+                900: '#2A311C',
               },
               warm: {
                 50: '#FFFBF5',
@@ -67,10 +80,31 @@
       body {
         font-family: 'Nunito Sans', sans-serif;
         background-color: #FFFBF5;
-        color: #334155;
+        color: #4B5945; /* New Secondary 500 */
       }
       h1, h2, h3, h4, h5, h6 {
         font-family: 'Merriweather', serif;
+      }
+      @keyframes bounce-slow {
+        0%, 100% { transform: translateY(-5%); animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
+        50% { transform: translateY(0); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+      }
+      .animate-bounce-slow {
+        animation: bounce-slow 3s infinite;
+      }
+      @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .animate-fade-in {
+        animation: fade-in 1s ease-out forwards;
+      }
+      @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in-up {
+        animation: fade-in-up 1s ease-out forwards;
       }
     </style>
   <script type="importmap">
