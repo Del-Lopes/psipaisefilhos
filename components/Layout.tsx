@@ -6,7 +6,7 @@ import StickyCTA from './StickyCTA';
 
 const Layout: React.FC = () => {
   return (
-    <div className="antialiased text-secondary-700 bg-warm-50 selection:bg-secondary-200 selection:text-secondary-900">
+    <div className="antialiased text-secondary-600 bg-warm-50 selection:bg-secondary-200 selection:text-secondary-900">
       <Navigation />
       <main>
         <Outlet />

@@ -42,8 +42,8 @@ const Navigation: React.FC = () => {
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <Link to="/" className="font-serif font-bold text-xl md:text-2xl text-secondary-600 uppercase tracking-tight">
-          Psi Bárbara Carvalho
+        <Link to="/" className="font-serif font-bold text-xl md:text-2xl text-secondary-600">
+          Bárbara Carvalho
         </Link>
 
         {/* Desktop Menu */}
@@ -70,7 +70,7 @@ const Navigation: React.FC = () => {
 
         {/* Mobile Toggle */}
         <button 
-          className="md:hidden text-secondary-700"
+          className="md:hidden text-secondary-600"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -85,7 +85,7 @@ const Navigation: React.FC = () => {
               key={link.label}
               href={link.href}
               onClick={(e) => handleAnchorClick(e, link.href)}
-              className="text-secondary-700 font-medium text-lg"
+              className="text-secondary-600 font-medium text-lg"
             >
               {link.label}
             </a>

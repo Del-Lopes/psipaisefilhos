@@ -36,7 +36,7 @@ const Pricing: React.FC = () => {
           <h2 className="text-secondary-500 font-bold uppercase tracking-widest text-sm mb-3">
             Investimento
           </h2>
-          <h3 className="text-3xl md:text-4xl font-serif font-bold text-secondary-700 mb-6">
+          <h3 className="text-3xl md:text-4xl font-serif font-bold text-secondary-600 mb-6">
             Planos de Atendimento
           </h3>
           <p className="text-secondary-500 text-lg">
@@ -70,7 +70,7 @@ const Pricing: React.FC = () => {
                 </div>
               </div>
 
-              <h4 className="text-xl font-bold text-secondary-700 text-center font-serif mb-2">
+              <h4 className="text-xl font-bold text-secondary-600 text-center font-serif mb-2">
                 {plan.title}
               </h4>
               <p className="text-sm text-secondary-400 text-center mb-6">
@@ -78,7 +78,7 @@ const Pricing: React.FC = () => {
               </p>
 
               <div className="mt-auto text-center">
-                <span className="text-3xl font-bold text-secondary-700">{plan.price}</span>
+                <span className="text-3xl font-bold text-secondary-600">{plan.price}</span>
                 <span className="text-secondary-400 text-sm ml-1">{plan.period}</span>
               </div>
             </div>

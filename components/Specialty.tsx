@@ -19,7 +19,7 @@ const Specialty: React.FC = () => {
 
           {/* Text Content Side */}
           <div className="order-1 lg:order-2">
-            <h2 className="text-4xl font-serif font-bold text-secondary-700 mb-6">
+            <h2 className="text-4xl font-serif font-bold text-secondary-600 mb-6">
               Especialidade em <span className="text-secondary-500">Neurodivergências</span>
             </h2>
             
@@ -28,26 +28,26 @@ const Specialty: React.FC = () => {
             </p>
 
             <div className="space-y-4 bg-white p-8 rounded-2xl shadow-sm border border-secondary-100">
-              <h3 className="font-bold text-secondary-700 mb-4 text-xl">Diferenciais do Tratamento:</h3>
+              <h3 className="font-bold text-secondary-600 mb-4 text-xl">Diferenciais do Tratamento:</h3>
               
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="text-accent-500 mt-1 flex-shrink-0" size={20} />
                 <p className="text-secondary-500">
-                  <strong className="text-secondary-700">Olhar Clínico Refinado:</strong> Identificação precoce de sinais sutis de TEA (Transtorno do Espectro Autista) e TDAH.
+                  <strong className="text-secondary-600">Olhar Clínico Refinado:</strong> Identificação precoce de sinais sutis de TEA (Transtorno do Espectro Autista) e TDAH.
                 </p>
               </div>
               
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="text-accent-500 mt-1 flex-shrink-0" size={20} />
                 <p className="text-secondary-500">
-                  <strong className="text-secondary-700">Protocolos Individualizados:</strong> Não existe "receita de bolo". Cada plano terapêutico respeita a neurobiologia específica do paciente.
+                  <strong className="text-secondary-600">Protocolos Individualizados:</strong> Não existe "receita de bolo". Cada plano terapêutico respeita a neurobiologia específica do paciente.
                 </p>
               </div>
 
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="text-accent-500 mt-1 flex-shrink-0" size={20} />
                 <p className="text-secondary-500">
-                  <strong className="text-secondary-700">Orientação Parental:</strong> Acolhimento e treinamento para pais entenderem o funcionamento do filho neurodivergente.
+                  <strong className="text-secondary-600">Orientação Parental:</strong> Acolhimento e treinamento para pais entenderem o funcionamento do filho neurodivergente.
                 </p>
               </div>
             </div>

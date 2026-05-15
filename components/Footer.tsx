@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         
         {/* Brand */}
         <div>
-          <h4 className="text-2xl font-serif font-bold text-white mb-4">Psi Bárbara Carvalho</h4>
+          <h4 className="text-2xl font-serif font-bold text-white mb-4">Bárbara Carvalho</h4>
           <p className="text-sm leading-relaxed opacity-80 mb-6">
             Psicologia Infantil e Neurodivergências.<br/>
             Cuidado ético, técnico e humanizado para o desenvolvimento do seu filho.
@@ -50,8 +50,8 @@ const Footer: React.FC = () => {
         </div>
 
       </div>
-      <div className="border-t border-secondary-700 mt-12 pt-8 text-center text-xs opacity-50">
-        &copy; {new Date().getFullYear()} Psi Bárbara Carvalho. Todos os direitos reservados.
+      <div className="border-t border-secondary-600 mt-12 pt-8 text-center text-xs opacity-50">
+        &copy; {new Date().getFullYear()} Bárbara Carvalho. Todos os direitos reservados.
       </div>
     </footer>
   );
