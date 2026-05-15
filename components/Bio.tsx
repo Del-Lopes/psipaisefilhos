@@ -25,7 +25,7 @@ const Bio: React.FC = () => {
             <h2 className="text-3xl font-serif font-bold text-secondary-700 mb-2">
               Psi Bárbara Carvalho
             </h2>
-            <h3 className="text-primary-600 font-semibold mb-6 uppercase tracking-wider text-sm">
+            <h3 className="text-secondary-500 font-semibold mb-6 uppercase tracking-wider text-sm">
               Psicologia Infantil e Parental
             </h3>
 

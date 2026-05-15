@@ -8,12 +8,12 @@ const Hero: React.FC = () => {
         
         {/* Text Content */}
         <div className="space-y-8 animate-fade-in-up">
-          <div className="inline-block bg-primary-100 text-primary-700 px-4 py-1.5 rounded-full text-sm font-bold tracking-wide mb-2">
+          <div className="inline-block bg-secondary-100 text-secondary-700 px-4 py-1.5 rounded-full text-sm font-bold tracking-wide mb-2">
             Psicologia Infantil & Neurodivergências
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-700 leading-tight">
-            Cuidado Especializado para <span className="text-primary-600">Pequenas Mentes</span>, <br className="hidden md:block" />
+            Cuidado Especializado para <span className="text-secondary-500">Pequenas Mentes</span>, <br className="hidden md:block" />
             <span className="text-accent-400">Grandes Futuros.</span>
           </h1>
           
@@ -25,14 +25,14 @@ const Hero: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <a 
               href="https://wa.me/5511987814483"
-              className="group flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-primary-500/30 transition-all duration-300 transform hover:-translate-y-1"
+              className="group flex items-center justify-center gap-2 bg-secondary-400 hover:bg-secondary-500 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-secondary-500/30 transition-all duration-300 transform hover:-translate-y-1"
             >
               Agendar Avaliação Inicial
               <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
             </a>
             <a 
               href="#specialty"
-              className="flex items-center justify-center px-8 py-4 rounded-xl border-2 border-secondary-200 text-secondary-600 font-semibold hover:border-primary-500 hover:text-primary-500 transition-colors"
+              className="flex items-center justify-center px-8 py-4 rounded-xl border-2 border-secondary-200 text-secondary-600 font-semibold hover:border-secondary-400 hover:text-secondary-400 transition-colors"
             >
               Conhecer Especialidades
             </a>
@@ -42,7 +42,7 @@ const Hero: React.FC = () => {
         {/* Image Content */}
         <div className="relative">
           <div className="absolute -top-10 -right-10 w-64 h-64 bg-accent-100 rounded-full blur-3xl opacity-50"></div>
-          <div className="absolute -bottom-10 -left-10 w-72 h-72 bg-primary-100 rounded-full blur-3xl opacity-50"></div>
+          <div className="absolute -bottom-10 -left-10 w-72 h-72 bg-secondary-100 rounded-full blur-3xl opacity-50"></div>
           
           <div className="relative rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
             <img 
@@ -56,7 +56,7 @@ const Hero: React.FC = () => {
               <p className="text-sm font-serif italic text-secondary-600">
                 "O desenvolvimento infantil não espera. A intervenção correta hoje define o adulto de amanhã."
               </p>
-              <p className="text-xs font-bold text-primary-600 mt-2 uppercase tracking-wider">
+              <p className="text-xs font-bold text-secondary-500 mt-2 uppercase tracking-wider">
                 — Psi Bárbara Carvalho
               </p>
             </div>

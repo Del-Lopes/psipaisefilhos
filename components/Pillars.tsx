@@ -40,7 +40,7 @@ const Pillars: React.FC = () => {
     <section id="pillars" className="py-24 bg-white">
       <div className="container mx-auto px-6 md:px-12">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-primary-600 font-bold uppercase tracking-widest text-sm mb-3">
+          <h2 className="text-secondary-500 font-bold uppercase tracking-widest text-sm mb-3">
             Por que buscar terapia?
           </h2>
           <h3 className="text-3xl md:text-4xl font-serif font-bold text-secondary-700 mb-6">
@@ -55,9 +55,9 @@ const Pillars: React.FC = () => {
           {pillarsData.map((pillar, index) => (
             <div 
               key={index}
-              className="group p-8 rounded-2xl bg-warm-50 border border-warm-100 hover:border-primary-200 hover:shadow-xl hover:shadow-primary-100/50 transition-all duration-300"
+              className="group p-8 rounded-2xl bg-warm-50 border border-warm-100 hover:border-secondary-200 hover:shadow-xl hover:shadow-secondary-100/50 transition-all duration-300"
             >
-              <div className="w-14 h-14 bg-white rounded-xl shadow-sm flex items-center justify-center text-primary-600 mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-14 h-14 bg-white rounded-xl shadow-sm flex items-center justify-center text-secondary-500 mb-6 group-hover:scale-110 transition-transform duration-300">
                 <pillar.icon size={32} />
               </div>
               <h4 className="text-xl font-bold text-secondary-700 mb-2 font-serif">

@@ -42,7 +42,7 @@ const Navigation: React.FC = () => {
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <Link to="/" className="font-serif font-bold text-xl md:text-2xl text-primary-700 uppercase tracking-tight">
+        <Link to="/" className="font-serif font-bold text-xl md:text-2xl text-secondary-600 uppercase tracking-tight">
           Psi Bárbara Carvalho
         </Link>
 
@@ -53,7 +53,7 @@ const Navigation: React.FC = () => {
               key={link.label}
               href={link.href}
               onClick={(e) => handleAnchorClick(e, link.href)}
-              className="text-secondary-600 hover:text-primary-500 font-medium transition-colors text-sm uppercase tracking-wide"
+              className="text-secondary-600 hover:text-secondary-400 font-medium transition-colors text-sm uppercase tracking-wide"
             >
               {link.label}
             </a>
@@ -62,7 +62,7 @@ const Navigation: React.FC = () => {
             href="https://wa.me/5511987814483"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-primary-500 hover:bg-primary-600 text-white px-5 py-2 rounded-full font-semibold transition-all text-sm shadow-lg hover:shadow-xl"
+            className="bg-secondary-400 hover:bg-secondary-500 text-white px-5 py-2 rounded-full font-semibold transition-all text-sm shadow-lg hover:shadow-xl"
           >
             Agendar Consulta
           </a>
@@ -92,7 +92,7 @@ const Navigation: React.FC = () => {
           ))}
           <a 
             href="https://wa.me/5511987814483"
-            className="bg-primary-500 text-white text-center py-3 rounded-lg font-bold"
+            className="bg-secondary-400 text-white text-center py-3 rounded-lg font-bold"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Agendar pelo WhatsApp

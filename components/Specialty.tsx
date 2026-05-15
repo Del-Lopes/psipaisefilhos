@@ -20,7 +20,7 @@ const Specialty: React.FC = () => {
           {/* Text Content Side */}
           <div className="order-1 lg:order-2">
             <h2 className="text-4xl font-serif font-bold text-secondary-700 mb-6">
-              Especialidade em <span className="text-primary-600">Neurodivergências</span>
+              Especialidade em <span className="text-secondary-500">Neurodivergências</span>
             </h2>
             
             <p className="text-lg text-secondary-500 mb-8 leading-relaxed">

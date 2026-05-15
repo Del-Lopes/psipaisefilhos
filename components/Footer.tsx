@@ -14,8 +14,8 @@ const Footer: React.FC = () => {
             Cuidado ético, técnico e humanizado para o desenvolvimento do seu filho.
           </p>
           <div className="flex gap-4">
-            <a href="#" className="hover:text-primary-300 transition-colors"><Instagram size={20} /></a>
-            <a href="#" className="hover:text-primary-300 transition-colors"><Linkedin size={20} /></a>
+            <a href="#" className="hover:text-secondary-300 transition-colors"><Instagram size={20} /></a>
+            <a href="#" className="hover:text-secondary-300 transition-colors"><Linkedin size={20} /></a>
           </div>
         </div>
 
@@ -42,10 +42,10 @@ const Footer: React.FC = () => {
         <div>
           <h5 className="text-white font-bold mb-4 uppercase tracking-wider text-sm">Menu</h5>
           <ul className="space-y-2 text-sm">
-              <li><a href="#hero" className="hover:text-primary-300 transition-colors">Início</a></li>
-              <li><a href="#pillars" className="hover:text-primary-300 transition-colors">Desenvolvimento</a></li>
-              <li><a href="#specialty" className="hover:text-primary-300 transition-colors">Neurodivergências</a></li>
-              <li><a href="#bio" className="hover:text-primary-300 transition-colors">Sobre Nós</a></li>
+              <li><a href="#hero" className="hover:text-secondary-300 transition-colors">Início</a></li>
+              <li><a href="#pillars" className="hover:text-secondary-300 transition-colors">Desenvolvimento</a></li>
+              <li><a href="#specialty" className="hover:text-secondary-300 transition-colors">Neurodivergências</a></li>
+              <li><a href="#bio" className="hover:text-secondary-300 transition-colors">Sobre Nós</a></li>
           </ul>
         </div>
 
