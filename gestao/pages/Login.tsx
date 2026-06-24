@@ -35,9 +35,9 @@ const Login: React.FC = () => {
           <img
             src="/logo.png"
             alt="Bárbara Carvalho - Psicologia Infantil"
-            className="mx-auto mb-5 h-24 w-24 object-contain"
+            className="mx-auto h-72 w-72 object-contain"
           />
-          <h1 className="font-serif text-2xl text-secondary-500">Gestão de Consultório</h1>
+          <h1 className="font-serif text-2xl text-secondary-500 -mt-6">Gestão de Consultório</h1>
           <p className="text-sm text-secondary-400 mt-1">Acesso restrito</p>
         </div>
 
