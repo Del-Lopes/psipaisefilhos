@@ -32,6 +32,11 @@ const Login: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center bg-warm-50 px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
+          <img
+            src="/logo.png"
+            alt="Bárbara Carvalho - Psicologia Infantil"
+            className="mx-auto mb-5 h-24 w-24 object-contain"
+          />
           <h1 className="font-serif text-2xl text-secondary-500">Gestão de Consultório</h1>
           <p className="text-sm text-secondary-400 mt-1">Acesso restrito</p>
         </div>

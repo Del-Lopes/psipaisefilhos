@@ -32,9 +32,13 @@ const AppLayout: React.FC = () => {
 
   const SidebarContent = (
     <div className="flex h-full flex-col">
-      <div className="px-6 py-6 border-b border-secondary-100">
-        <p className="font-serif text-lg text-secondary-500">Bárbara Carvalho</p>
-        <p className="text-xs text-secondary-400">Gestão de Consultório</p>
+      <div className="flex flex-col items-center text-center">
+        <img
+          src="/logo.png"
+          alt="Bárbara Carvalho - Psicologia Infantil"
+          className="w-full object-contain"
+        />
+        <p className="-mt-6 pb-3 text-xs text-secondary-400">Gestão de Consultório</p>
       </div>
       <nav className="flex-1 px-3 py-4 space-y-1">
         {navItems.map(({ to, label, icon: Icon, end }) => (
