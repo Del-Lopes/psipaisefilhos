@@ -159,10 +159,18 @@ export async function generateReportText(
     body: { tipo: payload.tipo, payload, instrucoes },
   });
   if (error) {
-    throw new Error(
-      'Não foi possível gerar o texto pela IA. Verifique se a função "gerar-relatorio" está publicada. Detalhe: ' +
-        error.message
-    );
+    // Tenta ler o corpo de erro retornado pela função (detalhe real da IA).
+    let detalhe = error.message;
+    const ctx = (error as { context?: Response }).context;
+    if (ctx && typeof ctx.text === 'function') {
+      try {
+        const body = await ctx.text();
+        if (body) detalhe = body;
+      } catch {
+        /* mantém error.message */
+      }
+    }
+    throw new Error('Falha ao gerar pela IA. Detalhe: ' + detalhe);
   }
   return (data as { texto: string }).texto;
 }

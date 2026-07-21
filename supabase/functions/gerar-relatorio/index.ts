@@ -11,7 +11,9 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
 const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
-const MODEL = "gemini-1.5-flash";
+// Permite trocar o modelo por secret (GEMINI_MODEL) sem redeploy.
+// Default atualizado: gemini-1.5-flash foi descontinuado para chaves novas.
+const MODEL = Deno.env.get("GEMINI_MODEL") ?? "gemini-2.0-flash";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
