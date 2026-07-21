@@ -54,21 +54,34 @@ Deno.serve(async (req) => {
     return json({ error: "Faltam dados (payload/instrucoes)." }, 400);
   }
 
-  // Monta o prompt: instruções da psicóloga (o "formato") + os dados em JSON.
+  // Monta o prompt: diretrizes de escrita + instruções da psicóloga + dados.
   const prompt = [
-    "Você é um assistente que redige rascunhos de relatórios para uma psicóloga infantil.",
-    "Escreva SOMENTE com base nos dados fornecidos. NÃO invente informações que não estejam nos dados.",
-    "Se algum dado estiver ausente, omita a seção correspondente em vez de inventar.",
+    "Você redige o rascunho de um relatório psicológico infantil, na voz de uma psicóloga experiente escrevendo para os pais/responsáveis da criança.",
+    "",
+    "COMO ESCREVER (tom humano e profissional):",
+    "- Escreva em prosa fluida e acolhedora, em primeira pessoa (\"observei\", \"durante nossos encontros\"), como quem conhece a criança de verdade.",
+    "- Evite tom robótico, genérico ou de checklist. Prefira frases conectadas e transições naturais entre as ideias.",
+    "- Use os dados como base para NARRAR o desenvolvimento da criança, não apenas listá-los. Traga exemplos concretos das sessões quando existirem nos dados.",
+    "- Equilibre técnica e calor humano: quando usar um termo técnico, explique-o em linguagem simples.",
+    "- Comece valorizando as conquistas da criança antes de apontar o que estimular. Transmita esperança e um plano.",
+    "- Varie o vocabulário; evite repetir as mesmas expressões. Não use emojis.",
+    "",
+    "REGRAS DE INTEGRIDADE:",
+    "- Baseie-se ESTRITAMENTE nos dados fornecidos. NÃO invente fatos, nomes, datas ou resultados.",
+    "- Se um dado não existir, simplesmente não fale dele (não escreva \"não informado\").",
+    "- Não faça diagnóstico. Trata-se de avaliação de desenvolvimento e recomendações.",
+    "",
+    "FORMATO DE SAÍDA:",
+    "- Use Markdown: títulos com ## (e ### para subtítulos), **negrito** para destaques, listas com - quando fizer sentido. NÃO use # (título nível 1).",
+    "- Produza apenas o texto do relatório, pronto para revisão da profissional.",
     "",
     `Tipo de relatório: ${tipo}`,
     "",
-    "== Instruções de formato definidas pela profissional ==",
+    "== Instruções de conteúdo/estrutura definidas pela profissional ==",
     instrucoes,
     "",
-    "== Dados (JSON) ==",
+    "== Dados da criança e do acompanhamento (JSON) ==",
     JSON.stringify(payload, null, 2),
-    "",
-    "Produza apenas o texto do relatório, pronto para revisão.",
   ].join("\n");
 
   const url =
@@ -80,7 +93,7 @@ Deno.serve(async (req) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.4 },
+        generationConfig: { temperature: 0.7 },
       }),
     });
 

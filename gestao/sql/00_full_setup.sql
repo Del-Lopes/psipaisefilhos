@@ -298,6 +298,31 @@ drop policy if exists "report_templates_owner_all" on public.report_templates;
 create policy "report_templates_owner_all" on public.report_templates
   for all using (auth.uid() = owner_id) with check (auth.uid() = owner_id);
 
+-- ----------------------------------------------------------------------------
+-- 8. reports — relatórios gerados e salvos (para reabrir/exportar depois)
+-- ----------------------------------------------------------------------------
+create table if not exists public.reports (
+  id          uuid primary key default gen_random_uuid(),
+  owner_id    uuid not null references auth.users (id) on delete cascade default auth.uid(),
+  patient_id  uuid not null references public.patients (id) on delete cascade,
+  session_id  uuid references public.sessions (id) on delete set null,
+  tipo        text not null,
+  titulo      text not null,
+  conteudo    text not null,
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now()
+);
+create index if not exists reports_patient_idx on public.reports (patient_id);
+create index if not exists reports_owner_idx   on public.reports (owner_id);
+drop trigger if exists reports_set_updated_at on public.reports;
+create trigger reports_set_updated_at
+  before update on public.reports
+  for each row execute function public.set_updated_at();
+alter table public.reports enable row level security;
+drop policy if exists "reports_owner_all" on public.reports;
+create policy "reports_owner_all" on public.reports
+  for all using (auth.uid() = owner_id) with check (auth.uid() = owner_id);
+
 -- ============================================================================
 --  FIM. Banco pronto. Agora crie o usuário da psicóloga em
 --  Authentication > Users > Add user (marque Auto Confirm).

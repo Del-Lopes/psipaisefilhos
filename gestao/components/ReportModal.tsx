@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X, Loader2, Sparkles, Printer, AlertTriangle } from 'lucide-react';
+import { X, Loader2, Sparkles, Printer, AlertTriangle, Save, Eye, Pencil, Check } from 'lucide-react';
 import type { ReportType, ReportTemplate, ReportPayload } from '../lib/types';
 import {
   listTemplates, getEmitter, generateReportText,
-  buildSessionPayload, buildGeneralPayload,
+  buildSessionPayload, buildGeneralPayload, saveReport,
 } from '../lib/reports';
 import { stashPrintData } from '../pages/ReportPrint';
+import Markdown from './Markdown';
 
 interface Props {
   tipo: ReportType;
@@ -14,9 +15,10 @@ interface Props {
   patientName: string;
   sessionId?: string; // obrigatório quando tipo = 'sessao'
   onClose: () => void;
+  onSaved?: () => void; // avisa a ficha para recarregar a lista de relatórios
 }
 
-const ReportModal: React.FC<Props> = ({ tipo, patientId, patientName, sessionId, onClose }) => {
+const ReportModal: React.FC<Props> = ({ tipo, patientId, patientName, sessionId, onClose, onSaved }) => {
   const navigate = useNavigate();
   const [templates, setTemplates] = useState<ReportTemplate[]>([]);
   const [templateId, setTemplateId] = useState('');
@@ -24,7 +26,12 @@ const ReportModal: React.FC<Props> = ({ tipo, patientId, patientName, sessionId,
   const [texto, setTexto] = useState('');
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [view, setView] = useState<'editar' | 'preview'>('editar');
   const [error, setError] = useState<string | null>(null);
+
+  const titulo = tipo === 'sessao' ? 'Relatório de Sessão' : 'Relatório de Acompanhamento';
 
   useEffect(() => {
     (async () => {
@@ -55,6 +62,7 @@ const ReportModal: React.FC<Props> = ({ tipo, patientId, patientName, sessionId,
     try {
       const gerado = await generateReportText(payload, tpl.instrucoes);
       setTexto(gerado);
+      setSaved(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao gerar com IA.');
     } finally {
@@ -62,11 +70,32 @@ const ReportModal: React.FC<Props> = ({ tipo, patientId, patientName, sessionId,
     }
   };
 
+  const handleSave = async () => {
+    if (!texto.trim()) return setError('Nada para salvar. Gere ou escreva o texto primeiro.');
+    setError(null);
+    setSaving(true);
+    try {
+      await saveReport({
+        patient_id: patientId,
+        session_id: tipo === 'sessao' ? sessionId ?? null : null,
+        tipo,
+        titulo,
+        conteudo: texto,
+      });
+      setSaved(true);
+      onSaved?.();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro ao salvar.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const handlePrint = async () => {
     if (!texto.trim()) return setError('O relatório está vazio. Gere com IA ou escreva o texto.');
     const emitter = await getEmitter();
     stashPrintData({
-      titulo: tipo === 'sessao' ? 'Relatório de Sessão' : 'Relatório de Acompanhamento',
+      titulo,
       pacienteNome: patientName,
       corpo: texto,
       emitente: {
@@ -132,13 +161,37 @@ const ReportModal: React.FC<Props> = ({ tipo, patientId, patientName, sessionId,
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-secondary-600 mb-1">Texto do relatório</label>
-                <textarea
-                  value={texto}
-                  onChange={(e) => setTexto(e.target.value)}
-                  placeholder="Gere com IA acima, ou escreva/cole o texto do relatório aqui."
-                  className="w-full rounded-lg border border-secondary-200 px-3 py-3 text-secondary-700 leading-relaxed focus:border-secondary-500 focus:outline-none focus:ring-1 focus:ring-secondary-500 min-h-[260px]"
-                />
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-sm font-semibold text-secondary-600">Texto do relatório</label>
+                  <div className="flex rounded-lg border border-secondary-200 overflow-hidden text-xs">
+                    <button
+                      onClick={() => setView('editar')}
+                      className={`flex items-center gap-1 px-3 py-1.5 font-semibold ${view === 'editar' ? 'bg-secondary-500 text-white' : 'text-secondary-500 hover:bg-secondary-50'}`}
+                    >
+                      <Pencil className="h-3.5 w-3.5" /> Editar
+                    </button>
+                    <button
+                      onClick={() => setView('preview')}
+                      className={`flex items-center gap-1 px-3 py-1.5 font-semibold ${view === 'preview' ? 'bg-secondary-500 text-white' : 'text-secondary-500 hover:bg-secondary-50'}`}
+                    >
+                      <Eye className="h-3.5 w-3.5" /> Prévia
+                    </button>
+                  </div>
+                </div>
+                {view === 'editar' ? (
+                  <textarea
+                    value={texto}
+                    onChange={(e) => { setTexto(e.target.value); setSaved(false); }}
+                    placeholder="Gere com IA acima, ou escreva/cole o texto do relatório aqui."
+                    className="w-full rounded-lg border border-secondary-200 px-3 py-3 text-secondary-700 leading-relaxed focus:border-secondary-500 focus:outline-none focus:ring-1 focus:ring-secondary-500 min-h-[300px] font-mono text-sm"
+                  />
+                ) : (
+                  <div className="rounded-lg border border-secondary-200 px-4 py-3 min-h-[300px] max-h-[400px] overflow-y-auto bg-warm-50">
+                    {texto.trim()
+                      ? <Markdown text={texto} />
+                      : <p className="text-sm text-secondary-400">Nada para pré-visualizar ainda.</p>}
+                  </div>
+                )}
               </div>
 
               {error && <p className="text-sm text-primary-700 bg-primary-50 rounded-lg px-3 py-2">{error}</p>}
@@ -148,7 +201,15 @@ const ReportModal: React.FC<Props> = ({ tipo, patientId, patientName, sessionId,
 
         <div className="flex items-center justify-end gap-3 border-t border-secondary-100 px-6 py-4">
           <button onClick={onClose} className="rounded-lg px-4 py-2 text-sm font-semibold text-secondary-600 hover:bg-secondary-50">
-            Cancelar
+            Fechar
+          </button>
+          <button
+            onClick={handleSave}
+            disabled={loading || saving}
+            className="flex items-center gap-2 rounded-lg border border-secondary-300 px-4 py-2 text-sm font-semibold text-secondary-600 hover:bg-secondary-50 disabled:opacity-60"
+          >
+            {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : saved ? <Check className="h-4 w-4 text-nature-600" /> : <Save className="h-4 w-4" />}
+            {saved ? 'Salvo' : 'Salvar'}
           </button>
           <button
             onClick={handlePrint}

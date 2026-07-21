@@ -20,6 +20,7 @@ import GuardianForm from '../components/GuardianForm';
 import SessionNoteModal from '../components/SessionNoteModal';
 import EvolutionSection from '../components/EvolutionSection';
 import ReportModal from '../components/ReportModal';
+import ReportsSection from '../components/ReportsSection';
 import type { ReportType } from '../lib/types';
 
 const Field: React.FC<{ label: string; value?: string | null }> = ({ label, value }) => (
@@ -46,6 +47,7 @@ const PatientDetail: React.FC = () => {
   const [tab, setTab] = useState<'ficha' | 'evolucao'>('ficha');
   // Relatório: guarda tipo + (opcional) sessão de origem.
   const [reportModal, setReportModal] = useState<{ tipo: ReportType; session?: Session } | null>(null);
+  const [reportsReloadKey, setReportsReloadKey] = useState(0);
 
   const load = useCallback(async () => {
     if (!id) return;
@@ -307,6 +309,9 @@ const PatientDetail: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Relatórios salvos */}
+      <ReportsSection patientId={patient.id} reloadKey={reportsReloadKey} />
       </>
       )}
 
@@ -335,6 +340,7 @@ const PatientDetail: React.FC = () => {
           patientName={patient.nome}
           sessionId={reportModal.session?.id}
           onClose={() => setReportModal(null)}
+          onSaved={() => setReportsReloadKey((k) => k + 1)}
         />
       )}
       {guardianModal.open && (

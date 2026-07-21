@@ -2,6 +2,7 @@ import { supabase } from './supabase';
 import type {
   ReportTemplate, ReportTemplateInput, ReportType,
   EmitterProfile, EmitterInput, ReportPayload,
+  Report, ReportWithPatient, ReportInput,
 } from './types';
 import { getPatient, listGuardians } from './patients';
 import { listSessionsByPatient } from './sessions';
@@ -33,6 +34,39 @@ export async function updateTemplate(id: string, input: Partial<ReportTemplateIn
 
 export async function deleteTemplate(id: string): Promise<void> {
   const { error } = await supabase.from('report_templates').delete().eq('id', id);
+  if (error) throw error;
+}
+
+// --- Relatórios salvos -----------------------------------------------------
+
+export async function listReports(patientId: string): Promise<Report[]> {
+  const { data, error } = await supabase
+    .from('reports')
+    .select('*')
+    .eq('patient_id', patientId)
+    .order('created_at', { ascending: false });
+  if (error) throw error;
+  return data as Report[];
+}
+
+export async function getReport(id: string): Promise<ReportWithPatient | null> {
+  const { data, error } = await supabase
+    .from('reports')
+    .select('*, patient:patients(id, nome)')
+    .eq('id', id)
+    .maybeSingle();
+  if (error) throw error;
+  return (data as unknown as ReportWithPatient) ?? null;
+}
+
+export async function saveReport(input: ReportInput): Promise<Report> {
+  const { data, error } = await supabase.from('reports').insert(input).select().single();
+  if (error) throw error;
+  return data as Report;
+}
+
+export async function deleteReport(id: string): Promise<void> {
+  const { error } = await supabase.from('reports').delete().eq('id', id);
   if (error) throw error;
 }
 

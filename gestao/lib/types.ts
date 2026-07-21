@@ -159,6 +159,25 @@ export interface ReportTemplate {
 
 export type ReportTemplateInput = Pick<ReportTemplate, 'tipo' | 'nome' | 'instrucoes'>;
 
+// Relatório gerado e salvo (para reabrir/exportar depois).
+export interface Report {
+  id: string;
+  owner_id: string;
+  patient_id: string;
+  session_id: string | null;
+  tipo: ReportType;
+  titulo: string;
+  conteudo: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ReportWithPatient extends Report {
+  patient: Pick<Patient, 'id' | 'nome'> | null;
+}
+
+export type ReportInput = Pick<Report, 'patient_id' | 'session_id' | 'tipo' | 'titulo' | 'conteudo'>;
+
 // Dados da emitente (psicóloga), guardados em profiles.
 export interface EmitterProfile {
   id: string;
