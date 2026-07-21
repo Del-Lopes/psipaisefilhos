@@ -33,16 +33,18 @@ const AppLayout: React.FC = () => {
   };
 
   const SidebarContent = (
-    <div className="flex h-full flex-col">
-      <div className="flex flex-col items-center text-center">
+    <div className="flex h-full min-h-0 flex-col">
+      {/* Cabeçalho (logo) — altura limitada para não empurrar o menu */}
+      <div className="shrink-0 flex flex-col items-center text-center">
         <img
           src="/logo.png"
           alt="Bárbara Carvalho - Psicologia Infantil"
-          className="w-full object-contain"
+          className="w-full max-h-36 object-contain"
         />
-        <p className="-mt-6 pb-3 text-xs text-secondary-400">Gestão de Consultório</p>
+        <p className="-mt-4 pb-3 text-xs text-secondary-400">Gestão de Consultório</p>
       </div>
-      <nav className="flex-1 px-3 py-4 space-y-1">
+      {/* Menu — rola internamente se faltar espaço */}
+      <nav className="flex-1 min-h-0 overflow-y-auto px-3 py-4 space-y-1">
         {navItems.map(({ to, label, icon: Icon, end }) => (
           <NavLink
             key={to}
@@ -62,7 +64,8 @@ const AppLayout: React.FC = () => {
           </NavLink>
         ))}
       </nav>
-      <div className="border-t border-secondary-100 p-3">
+      {/* Rodapé (Sair) — sempre fixo e visível */}
+      <div className="shrink-0 border-t border-secondary-100 p-3">
         <p className="px-3 pb-2 text-xs text-secondary-400 truncate">{user?.email}</p>
         <button
           onClick={handleSignOut}
