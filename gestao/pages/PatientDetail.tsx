@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams, Link } from 'react-router-dom';
 import {
   ArrowLeft, Pencil, Trash2, Plus, Phone, Mail, Loader2, UserRound, Star, CalendarDays,
   FolderOpen, ExternalLink, FileText, FileCheck, FileBarChart,
@@ -21,6 +21,7 @@ import SessionNoteModal from '../components/SessionNoteModal';
 import EvolutionSection from '../components/EvolutionSection';
 import ReportModal from '../components/ReportModal';
 import ReportsSection from '../components/ReportsSection';
+import { takeReportEditDraft } from './ReportPrint';
 import type { ReportType } from '../lib/types';
 
 const Field: React.FC<{ label: string; value?: string | null }> = ({ label, value }) => (
@@ -45,9 +46,10 @@ const PatientDetail: React.FC = () => {
   const [guardianModal, setGuardianModal] = useState<{ open: boolean; edit?: Guardian }>({ open: false });
   const [noteSession, setNoteSession] = useState<Session | null>(null);
   const [tab, setTab] = useState<'ficha' | 'evolucao'>('ficha');
-  // Relatório: guarda tipo + (opcional) sessão de origem.
-  const [reportModal, setReportModal] = useState<{ tipo: ReportType; session?: Session } | null>(null);
+  // Relatório: guarda tipo + (opcional) sessão de origem + texto inicial (ao voltar da impressão).
+  const [reportModal, setReportModal] = useState<{ tipo: ReportType; session?: Session; textoInicial?: string } | null>(null);
   const [reportsReloadKey, setReportsReloadKey] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const load = useCallback(async () => {
     if (!id) return;
@@ -69,6 +71,20 @@ const PatientDetail: React.FC = () => {
   }, [id]);
 
   useEffect(() => { load(); }, [load]);
+
+  // Ao voltar da página de impressão para editar: reabre o modal com o texto.
+  // Espera as sessões carregarem (para achar a sessão de origem, se houver).
+  useEffect(() => {
+    if (searchParams.get('editReport') !== '1' || loading) return;
+    const draft = takeReportEditDraft();
+    if (draft && draft.patientId === id) {
+      const session = draft.sessionId ? sessions.find((s) => s.id === draft.sessionId) : undefined;
+      setReportModal({ tipo: draft.tipo, session, textoInicial: draft.texto });
+    }
+    searchParams.delete('editReport');
+    setSearchParams(searchParams, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, id, loading]);
 
   const handleUpdatePatient = async (input: PatientInput) => {
     if (!id) return;
@@ -339,6 +355,7 @@ const PatientDetail: React.FC = () => {
           patientId={patient.id}
           patientName={patient.nome}
           sessionId={reportModal.session?.id}
+          textoInicial={reportModal.textoInicial}
           onClose={() => setReportModal(null)}
           onSaved={() => setReportsReloadKey((k) => k + 1)}
         />

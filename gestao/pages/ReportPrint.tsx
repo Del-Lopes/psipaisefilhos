@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { Printer, ArrowLeft, Loader2 } from 'lucide-react';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
+import { Printer, ArrowLeft, Loader2, Pencil } from 'lucide-react';
 import Markdown from '../components/Markdown';
 import { getReport, getEmitter } from '../lib/reports';
+
+interface EdicaoContexto {
+  patientId: string;
+  tipo: 'sessao' | 'geral';
+  sessionId?: string;
+  texto: string;
+}
 
 interface PrintData {
   titulo: string;
@@ -16,20 +23,37 @@ interface PrintData {
     endereco: string | null;
   };
   dataEmissao: string;
+  edicao?: EdicaoContexto; // presente quando veio do modal (permite voltar a editar)
 }
 
 const STORAGE_KEY = 'gestao:report-print';
+const EDIT_KEY = 'gestao:report-edit'; // rascunho para reabrir o modal de edição
 
 /** Salva os dados e navega para a impressão (usado pelo modal de geração). */
 export function stashPrintData(data: PrintData) {
   sessionStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
+/** Lê e consome (remove) o rascunho de edição deixado pela página de impressão. */
+export function takeReportEditDraft(): EdicaoContexto | null {
+  const raw = sessionStorage.getItem(EDIT_KEY);
+  if (!raw) return null;
+  sessionStorage.removeItem(EDIT_KEY);
+  try { return JSON.parse(raw) as EdicaoContexto; } catch { return null; }
+}
+
 const ReportPrint: React.FC = () => {
+  const navigate = useNavigate();
   const [params] = useSearchParams();
   const reportId = params.get('id'); // se vier ?id=, carrega do banco (relatório salvo)
   const [data, setData] = useState<PrintData | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const voltarParaEdicao = () => {
+    if (!data?.edicao) return;
+    sessionStorage.setItem(EDIT_KEY, JSON.stringify(data.edicao));
+    navigate(`/app/pacientes/${data.edicao.patientId}?editReport=1`);
+  };
 
   useEffect(() => {
     (async () => {
@@ -79,9 +103,19 @@ const ReportPrint: React.FC = () => {
     <div className="report-print-root min-h-screen bg-warm-50">
       {/* Barra de ações — escondida na impressão */}
       <div className="no-print sticky top-0 z-10 flex items-center justify-between gap-4 bg-white/90 backdrop-blur border-b border-secondary-100 px-4 py-3">
-        <button onClick={() => window.history.back()} className="inline-flex items-center gap-1 text-sm text-secondary-500 hover:underline">
-          <ArrowLeft className="h-4 w-4" /> Voltar
-        </button>
+        <div className="flex items-center gap-2">
+          <button onClick={() => window.history.back()} className="inline-flex items-center gap-1 text-sm text-secondary-500 hover:underline">
+            <ArrowLeft className="h-4 w-4" /> Voltar
+          </button>
+          {data.edicao && (
+            <button
+              onClick={voltarParaEdicao}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-secondary-200 px-3 py-2 text-sm font-semibold text-secondary-600 hover:bg-secondary-50"
+            >
+              <Pencil className="h-4 w-4" /> Voltar para edição
+            </button>
+          )}
+        </div>
         <button onClick={() => window.print()} className="flex items-center gap-2 rounded-lg bg-secondary-500 px-4 py-2 text-sm font-semibold text-white hover:bg-secondary-600 shadow-sm">
           <Printer className="h-4 w-4" /> Imprimir / Salvar PDF
         </button>

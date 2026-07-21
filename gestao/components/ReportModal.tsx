@@ -14,16 +14,17 @@ interface Props {
   patientId: string;
   patientName: string;
   sessionId?: string; // obrigatório quando tipo = 'sessao'
+  textoInicial?: string; // pré-preenche o texto (ao voltar da impressão para editar)
   onClose: () => void;
   onSaved?: () => void; // avisa a ficha para recarregar a lista de relatórios
 }
 
-const ReportModal: React.FC<Props> = ({ tipo, patientId, patientName, sessionId, onClose, onSaved }) => {
+const ReportModal: React.FC<Props> = ({ tipo, patientId, patientName, sessionId, textoInicial, onClose, onSaved }) => {
   const navigate = useNavigate();
   const [templates, setTemplates] = useState<ReportTemplate[]>([]);
   const [templateId, setTemplateId] = useState('');
   const [payload, setPayload] = useState<ReportPayload | null>(null);
-  const [texto, setTexto] = useState('');
+  const [texto, setTexto] = useState(textoInicial ?? '');
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -106,6 +107,7 @@ const ReportModal: React.FC<Props> = ({ tipo, patientId, patientName, sessionId,
         endereco: emitter?.endereco ?? null,
       },
       dataEmissao: new Date().toISOString(),
+      edicao: { patientId, tipo, sessionId, texto },
     });
     navigate('/app/relatorio/print');
   };
