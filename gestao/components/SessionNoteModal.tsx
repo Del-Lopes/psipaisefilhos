@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { X, Loader2, Save, FileText } from 'lucide-react';
+import { X, Loader2, Save, FileText, FileBarChart } from 'lucide-react';
 import { getNote, saveNote } from '../lib/notes';
 import { listIndicators, scoresForSession, saveScore } from '../lib/evolution';
 import type { Indicator } from '../lib/types';
@@ -12,9 +12,10 @@ interface Props {
   patientId?: string; // se informado, permite pontuar os indicadores nesta sessão
   onClose: () => void;
   onSaved?: () => void; // permite à tela-pai recarregar indicadores
+  onGenerateReport?: () => void; // se informado, mostra botão de gerar relatório da sessão
 }
 
-const SessionNoteModal: React.FC<Props> = ({ sessionId, patientName, inicioISO, patientId, onClose, onSaved }) => {
+const SessionNoteModal: React.FC<Props> = ({ sessionId, patientName, inicioISO, patientId, onClose, onSaved, onGenerateReport }) => {
   const [conteudo, setConteudo] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -135,6 +136,14 @@ const SessionNoteModal: React.FC<Props> = ({ sessionId, patientName, inicioISO, 
             {savedAt ? `Salvo em ${formatDateBR(savedAt.slice(0, 10))} ${formatTime(savedAt)}` : 'Ainda não salvo'}
           </span>
           <div className="flex gap-3">
+            {onGenerateReport && (
+              <button
+                onClick={onGenerateReport}
+                className="flex items-center gap-2 rounded-lg border border-secondary-200 px-4 py-2 text-sm font-semibold text-secondary-600 hover:bg-secondary-50"
+              >
+                <FileBarChart className="h-4 w-4" /> Relatório
+              </button>
+            )}
             <button onClick={onClose} className="rounded-lg px-4 py-2 text-sm font-semibold text-secondary-600 hover:bg-secondary-50">
               Fechar
             </button>

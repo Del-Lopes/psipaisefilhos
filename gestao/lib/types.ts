@@ -142,3 +142,51 @@ export interface AttendanceStats {
   percentComparecimento: number; // realizadas / (realizadas + faltas)
   porMes: { mes: string; realizadas: number; faltas: number }[];
 }
+
+// --- Relatórios ------------------------------------------------------------
+
+export type ReportType = 'sessao' | 'geral';
+
+export interface ReportTemplate {
+  id: string;
+  owner_id: string;
+  tipo: ReportType;
+  nome: string;
+  instrucoes: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export type ReportTemplateInput = Pick<ReportTemplate, 'tipo' | 'nome' | 'instrucoes'>;
+
+// Dados da emitente (psicóloga), guardados em profiles.
+export interface EmitterProfile {
+  id: string;
+  nome: string | null;
+  crp: string | null;
+  documento: string | null;
+  telefone: string | null;
+  endereco: string | null;
+}
+
+export type EmitterInput = Pick<EmitterProfile, 'nome' | 'crp' | 'documento' | 'telefone' | 'endereco'>;
+
+// Objeto de dados enviado à IA / usado para montar o relatório.
+export interface ReportPayload {
+  tipo: ReportType;
+  paciente: {
+    nome: string;
+    data_nascimento: string | null;
+    idade: number | null;
+    sexo: string | null;
+    escola: string | null;
+    ano_escolar: string | null;
+    queixa_inicial: string | null;
+  };
+  responsaveis: { nome: string; parentesco: string | null }[];
+  frequencia?: { total: number; realizadas: number; faltas: number; percentComparecimento: number };
+  objetivos?: { titulo: string; status: string }[];
+  indicadores?: { nome: string; ultimaPontuacao: number | null }[];
+  sessao?: { data: string; evolucao: string | null };        // relatório de sessão
+  sessoes?: { data: string; status: string; evolucao: string | null }[]; // relatório geral
+}

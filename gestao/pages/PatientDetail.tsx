@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   ArrowLeft, Pencil, Trash2, Plus, Phone, Mail, Loader2, UserRound, Star, CalendarDays,
-  FolderOpen, ExternalLink, FileText, FileCheck,
+  FolderOpen, ExternalLink, FileText, FileCheck, FileBarChart,
 } from 'lucide-react';
 import {
   getPatient, updatePatient, deletePatient,
@@ -19,6 +19,8 @@ import PatientForm from '../components/PatientForm';
 import GuardianForm from '../components/GuardianForm';
 import SessionNoteModal from '../components/SessionNoteModal';
 import EvolutionSection from '../components/EvolutionSection';
+import ReportModal from '../components/ReportModal';
+import type { ReportType } from '../lib/types';
 
 const Field: React.FC<{ label: string; value?: string | null }> = ({ label, value }) => (
   <div>
@@ -42,6 +44,8 @@ const PatientDetail: React.FC = () => {
   const [guardianModal, setGuardianModal] = useState<{ open: boolean; edit?: Guardian }>({ open: false });
   const [noteSession, setNoteSession] = useState<Session | null>(null);
   const [tab, setTab] = useState<'ficha' | 'evolucao'>('ficha');
+  // Relatório: guarda tipo + (opcional) sessão de origem.
+  const [reportModal, setReportModal] = useState<{ tipo: ReportType; session?: Session } | null>(null);
 
   const load = useCallback(async () => {
     if (!id) return;
@@ -133,6 +137,9 @@ const PatientDetail: React.FC = () => {
             </p>
           </div>
           <div className="flex gap-2 shrink-0">
+            <button onClick={() => setReportModal({ tipo: 'geral' })} className="flex items-center gap-1.5 rounded-lg border border-secondary-200 px-3 py-2 text-sm font-semibold text-secondary-600 hover:bg-secondary-50">
+              <FileBarChart className="h-4 w-4" /> Relatório
+            </button>
             <button onClick={() => setEditingPatient(true)} className="flex items-center gap-1.5 rounded-lg border border-secondary-200 px-3 py-2 text-sm font-semibold text-secondary-600 hover:bg-secondary-50">
               <Pencil className="h-4 w-4" /> Editar
             </button>
@@ -314,6 +321,20 @@ const PatientDetail: React.FC = () => {
           patientId={patient.id}
           onClose={() => setNoteSession(null)}
           onSaved={load}
+          onGenerateReport={() => {
+            const s = noteSession;
+            setNoteSession(null);
+            setReportModal({ tipo: 'sessao', session: s });
+          }}
+        />
+      )}
+      {reportModal && patient && (
+        <ReportModal
+          tipo={reportModal.tipo}
+          patientId={patient.id}
+          patientName={patient.nome}
+          sessionId={reportModal.session?.id}
+          onClose={() => setReportModal(null)}
         />
       )}
       {guardianModal.open && (

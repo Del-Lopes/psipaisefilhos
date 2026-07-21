@@ -30,6 +30,13 @@ create table if not exists public.profiles (
   created_at  timestamptz not null default now()
 );
 
+-- Dados da emitente (para relatórios).
+alter table public.profiles
+  add column if not exists crp        text,
+  add column if not exists documento  text,
+  add column if not exists telefone   text,
+  add column if not exists endereco   text;
+
 alter table public.profiles enable row level security;
 
 drop policy if exists "profiles_self_select" on public.profiles;
@@ -266,6 +273,29 @@ create trigger goals_set_updated_at
 alter table public.goals enable row level security;
 drop policy if exists "goals_owner_all" on public.goals;
 create policy "goals_owner_all" on public.goals
+  for all using (auth.uid() = owner_id) with check (auth.uid() = owner_id);
+
+-- ----------------------------------------------------------------------------
+-- 7. report_templates — templates de IA para relatórios
+-- ----------------------------------------------------------------------------
+create table if not exists public.report_templates (
+  id          uuid primary key default gen_random_uuid(),
+  owner_id    uuid not null references auth.users (id) on delete cascade default auth.uid(),
+  tipo        text not null,
+  nome        text not null,
+  instrucoes  text not null,
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now()
+);
+create index if not exists report_templates_owner_idx on public.report_templates (owner_id);
+create index if not exists report_templates_tipo_idx  on public.report_templates (tipo);
+drop trigger if exists report_templates_set_updated_at on public.report_templates;
+create trigger report_templates_set_updated_at
+  before update on public.report_templates
+  for each row execute function public.set_updated_at();
+alter table public.report_templates enable row level security;
+drop policy if exists "report_templates_owner_all" on public.report_templates;
+create policy "report_templates_owner_all" on public.report_templates
   for all using (auth.uid() = owner_id) with check (auth.uid() = owner_id);
 
 -- ============================================================================

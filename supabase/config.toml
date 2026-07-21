@@ -1,0 +1,6 @@
+# Configuração local do projeto Supabase (usada pela CLI).
+# O project_id é preenchido ao rodar `npx supabase link`.
+
+[functions.gerar-relatorio]
+# Exige JWT válido (usuário autenticado) para invocar a função.
+verify_jwt = true

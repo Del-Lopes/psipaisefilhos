@@ -10,6 +10,8 @@ import PatientDetail from './pages/PatientDetail';
 import Agenda from './pages/Agenda';
 import Financeiro from './pages/Financeiro';
 import Documentos from './pages/Documentos';
+import Configuracoes from './pages/Configuracoes';
+import ReportPrint from './pages/ReportPrint';
 
 /** Envolve toda a subárvore /app com o contexto de autenticação. */
 const AppShell: React.FC = () => (
@@ -38,6 +40,16 @@ export const appRoutes = (
       <Route path="agenda" element={<Agenda />} />
       <Route path="documentos" element={<Documentos />} />
       <Route path="financeiro" element={<Financeiro />} />
+      <Route path="configuracoes" element={<Configuracoes />} />
     </Route>
+    {/* Impressão fica FORA do AppLayout (sem sidebar/topbar na folha) */}
+    <Route
+      path="relatorio/print"
+      element={
+        <ProtectedRoute>
+          <ReportPrint />
+        </ProtectedRoute>
+      }
+    />
   </Route>
 );

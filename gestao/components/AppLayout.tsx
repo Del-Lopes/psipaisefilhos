@@ -6,6 +6,7 @@ import {
   CalendarDays,
   FileText,
   Wallet,
+  Settings,
   LogOut,
   Menu,
   X,
@@ -18,6 +19,7 @@ const navItems = [
   { to: '/app/agenda', label: 'Agenda', icon: CalendarDays },
   { to: '/app/documentos', label: 'Documentos', icon: FileText },
   { to: '/app/financeiro', label: 'Financeiro', icon: Wallet },
+  { to: '/app/configuracoes', label: 'Configurações', icon: Settings },
 ];
 
 const AppLayout: React.FC = () => {
