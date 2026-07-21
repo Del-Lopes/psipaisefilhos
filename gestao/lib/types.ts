@@ -75,3 +75,70 @@ export interface SessionNote {
   created_at: string;
   updated_at: string;
 }
+
+// --- Evolução visual -------------------------------------------------------
+
+export interface Indicator {
+  id: string;
+  owner_id: string;
+  patient_id: string;
+  nome: string;
+  escala_min: number;
+  escala_max: number;
+  cor: string | null;
+  ativo: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export type IndicatorInput = Pick<
+  Indicator,
+  'nome' | 'escala_min' | 'escala_max' | 'cor' | 'ativo'
+>;
+
+export interface IndicatorScore {
+  id: string;
+  owner_id: string;
+  indicator_id: string;
+  session_id: string;
+  valor: number;
+  created_at: string;
+}
+
+// Pontuação com a data da sessão embutida (join), para montar a série do gráfico.
+export interface IndicatorScorePoint {
+  indicator_id: string;
+  session_id: string;
+  valor: number;
+  inicio: string; // data/hora da sessão (ISO)
+}
+
+export type GoalStatus = 'em_andamento' | 'atingido' | 'pausado';
+
+export interface Goal {
+  id: string;
+  owner_id: string;
+  patient_id: string;
+  titulo: string;
+  descricao: string | null;
+  status: GoalStatus;
+  atingido_em: string | null;
+  ordem: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export type GoalInput = Pick<
+  Goal,
+  'titulo' | 'descricao' | 'status' | 'atingido_em' | 'ordem'
+>;
+
+export interface AttendanceStats {
+  total: number;
+  realizadas: number;
+  faltas: number;
+  canceladas: number;
+  agendadas: number;
+  percentComparecimento: number; // realizadas / (realizadas + faltas)
+  porMes: { mes: string; realizadas: number; faltas: number }[];
+}

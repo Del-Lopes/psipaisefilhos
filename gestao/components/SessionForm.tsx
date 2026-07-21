@@ -179,6 +179,7 @@ const SessionForm: React.FC<Props> = ({
           sessionId={initial.id}
           patientName={patients.find((p) => p.id === patientId)?.nome ?? 'Paciente'}
           inicioISO={initial.inicio}
+          patientId={patientId || undefined}
           onClose={() => setShowNote(false)}
         />
       )}

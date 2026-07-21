@@ -1,38 +1,62 @@
 import React, { useEffect, useState } from 'react';
 import { X, Loader2, Save, FileText } from 'lucide-react';
 import { getNote, saveNote } from '../lib/notes';
+import { listIndicators, scoresForSession, saveScore } from '../lib/evolution';
+import type { Indicator } from '../lib/types';
 import { formatDateBR, formatTime } from '../lib/format';
 
 interface Props {
   sessionId: string;
   patientName: string;
   inicioISO: string;
+  patientId?: string; // se informado, permite pontuar os indicadores nesta sessão
   onClose: () => void;
   onSaved?: () => void; // permite à tela-pai recarregar indicadores
 }
 
-const SessionNoteModal: React.FC<Props> = ({ sessionId, patientName, inicioISO, onClose, onSaved }) => {
+const SessionNoteModal: React.FC<Props> = ({ sessionId, patientName, inicioISO, patientId, onClose, onSaved }) => {
   const [conteudo, setConteudo] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [savedAt, setSavedAt] = useState<string | null>(null);
+  const [indicators, setIndicators] = useState<Indicator[]>([]);
+  const [scoreValues, setScoreValues] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    getNote(sessionId)
-      .then((n) => {
+    const tasks: Promise<unknown>[] = [
+      getNote(sessionId).then((n) => {
         setConteudo(n?.conteudo ?? '');
         setSavedAt(n?.updated_at ?? null);
-      })
+      }),
+    ];
+    if (patientId) {
+      tasks.push(
+        Promise.all([listIndicators(patientId), scoresForSession(sessionId)]).then(([inds, sc]) => {
+          setIndicators(inds.filter((i) => i.ativo));
+          const vals: Record<string, string> = {};
+          for (const [k, v] of Object.entries(sc)) vals[k] = String(v);
+          setScoreValues(vals);
+        })
+      );
+    }
+    Promise.all(tasks)
       .catch((err) => setError(err instanceof Error ? err.message : 'Erro ao carregar a evolução.'))
       .finally(() => setLoading(false));
-  }, [sessionId]);
+  }, [sessionId, patientId]);
 
   const handleSave = async () => {
     setSaving(true);
     setError(null);
     try {
       const n = await saveNote(sessionId, conteudo);
+      // Salva as pontuações preenchidas dos indicadores.
+      for (const ind of indicators) {
+        const raw = scoreValues[ind.id];
+        if (raw !== undefined && raw !== '') {
+          await saveScore(ind.id, sessionId, Number(raw.replace(',', '.')));
+        }
+      }
       setSavedAt(n.updated_at);
       onSaved?.();
     } catch (err) {
@@ -75,6 +99,32 @@ const SessionNoteModal: React.FC<Props> = ({ sessionId, patientName, inicioISO, 
                 placeholder="Descreva o que foi trabalhado na sessão, observações sobre a criança, encaminhamentos, próximos passos..."
                 autoFocus
               />
+
+              {indicators.length > 0 && (
+                <div className="mt-5">
+                  <p className="mb-2 text-sm font-semibold text-secondary-600">Indicadores desta sessão</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {indicators.map((ind) => (
+                      <label key={ind.id} className="flex items-center justify-between gap-3 rounded-lg border border-secondary-100 px-3 py-2">
+                        <span className="flex items-center gap-2 text-sm text-secondary-600">
+                          <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: ind.cor ?? '#4B5945' }} />
+                          {ind.nome}
+                        </span>
+                        <input
+                          type="number"
+                          min={ind.escala_min}
+                          max={ind.escala_max}
+                          value={scoreValues[ind.id] ?? ''}
+                          onChange={(e) => setScoreValues((v) => ({ ...v, [ind.id]: e.target.value }))}
+                          placeholder={`${ind.escala_min}–${ind.escala_max}`}
+                          className="w-20 rounded-lg border border-secondary-200 px-2 py-1 text-right text-secondary-700 focus:border-secondary-500 focus:outline-none focus:ring-1 focus:ring-secondary-500"
+                        />
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {error && <p className="mt-3 text-sm text-primary-700 bg-primary-50 rounded-lg px-3 py-2">{error}</p>}
             </>
           )}

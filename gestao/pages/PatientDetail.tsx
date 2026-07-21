@@ -18,6 +18,7 @@ import {
 import PatientForm from '../components/PatientForm';
 import GuardianForm from '../components/GuardianForm';
 import SessionNoteModal from '../components/SessionNoteModal';
+import EvolutionSection from '../components/EvolutionSection';
 
 const Field: React.FC<{ label: string; value?: string | null }> = ({ label, value }) => (
   <div>
@@ -40,6 +41,7 @@ const PatientDetail: React.FC = () => {
   const [editingPatient, setEditingPatient] = useState(false);
   const [guardianModal, setGuardianModal] = useState<{ open: boolean; edit?: Guardian }>({ open: false });
   const [noteSession, setNoteSession] = useState<Session | null>(null);
+  const [tab, setTab] = useState<'ficha' | 'evolucao'>('ficha');
 
   const load = useCallback(async () => {
     if (!id) return;
@@ -149,6 +151,27 @@ const PatientDetail: React.FC = () => {
         {patient.observacoes && <div className="mt-4"><Field label="Observações" value={patient.observacoes} /></div>}
       </div>
 
+      {/* Abas */}
+      <div className="flex gap-1 border-b border-secondary-100">
+        {([['ficha', 'Ficha'], ['evolucao', 'Evolução']] as const).map(([key, label]) => (
+          <button
+            key={key}
+            onClick={() => setTab(key)}
+            className={`px-4 py-2 text-sm font-semibold border-b-2 -mb-px transition-colors ${
+              tab === key
+                ? 'border-secondary-500 text-secondary-600'
+                : 'border-transparent text-secondary-400 hover:text-secondary-600'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {tab === 'evolucao' && <EvolutionSection patientId={patient.id} />}
+
+      {tab === 'ficha' && (
+      <>
       {/* Responsáveis */}
       <div className="bg-white rounded-2xl border border-secondary-100 p-6">
         <div className="flex items-center justify-between mb-4">
@@ -277,6 +300,8 @@ const PatientDetail: React.FC = () => {
           </div>
         )}
       </div>
+      </>
+      )}
 
       {editingPatient && (
         <PatientForm initial={patient} onCancel={() => setEditingPatient(false)} onSubmit={handleUpdatePatient} />
@@ -286,6 +311,7 @@ const PatientDetail: React.FC = () => {
           sessionId={noteSession.id}
           patientName={patient.nome}
           inicioISO={noteSession.inicio}
+          patientId={patient.id}
           onClose={() => setNoteSession(null)}
           onSaved={load}
         />
