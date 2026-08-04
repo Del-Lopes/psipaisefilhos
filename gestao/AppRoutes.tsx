@@ -10,6 +10,7 @@ import PatientDetail from './pages/PatientDetail';
 import Agenda from './pages/Agenda';
 import Financeiro from './pages/Financeiro';
 import Documentos from './pages/Documentos';
+import Fitness from './pages/Fitness';
 import Configuracoes from './pages/Configuracoes';
 import ReportPrint from './pages/ReportPrint';
 
@@ -40,6 +41,7 @@ export const appRoutes = (
       <Route path="agenda" element={<Agenda />} />
       <Route path="documentos" element={<Documentos />} />
       <Route path="financeiro" element={<Financeiro />} />
+      <Route path="fitness" element={<Fitness />} />
       <Route path="configuracoes" element={<Configuracoes />} />
     </Route>
     {/* Impressão fica FORA do AppLayout (sem sidebar/topbar na folha) */}

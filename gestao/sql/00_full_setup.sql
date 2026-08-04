@@ -323,6 +323,24 @@ drop policy if exists "reports_owner_all" on public.reports;
 create policy "reports_owner_all" on public.reports
   for all using (auth.uid() = owner_id) with check (auth.uid() = owner_id);
 
+-- ----------------------------------------------------------------------------
+-- 9. fitness_planos — plano de treinos de musculação (1 linha por usuária)
+-- ----------------------------------------------------------------------------
+create table if not exists public.fitness_planos (
+  owner_id     uuid primary key references auth.users (id) on delete cascade default auth.uid(),
+  treinos      jsonb not null default '[]'::jsonb,
+  created_at   timestamptz not null default now(),
+  updated_at   timestamptz not null default now()
+);
+drop trigger if exists fitness_planos_set_updated_at on public.fitness_planos;
+create trigger fitness_planos_set_updated_at
+  before update on public.fitness_planos
+  for each row execute function public.set_updated_at();
+alter table public.fitness_planos enable row level security;
+drop policy if exists "fitness_planos_owner_all" on public.fitness_planos;
+create policy "fitness_planos_owner_all" on public.fitness_planos
+  for all using (auth.uid() = owner_id) with check (auth.uid() = owner_id);
+
 -- ============================================================================
 --  FIM. Banco pronto. Agora crie o usuário da psicóloga em
 --  Authentication > Users > Add user (marque Auto Confirm).

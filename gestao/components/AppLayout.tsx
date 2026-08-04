@@ -6,6 +6,7 @@ import {
   CalendarDays,
   FileText,
   Wallet,
+  Dumbbell,
   Settings,
   LogOut,
   Menu,
@@ -19,6 +20,7 @@ const navItems = [
   { to: '/app/agenda', label: 'Agenda', icon: CalendarDays },
   { to: '/app/documentos', label: 'Documentos', icon: FileText },
   { to: '/app/financeiro', label: 'Financeiro', icon: Wallet },
+  { to: '/app/fitness', label: 'Fitness', icon: Dumbbell },
   { to: '/app/configuracoes', label: 'Configurações', icon: Settings },
 ];
 
