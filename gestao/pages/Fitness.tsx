@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Dumbbell,
   Timer,
@@ -36,67 +36,164 @@ const formatarTempo = (s: number) =>
 /** Cópia profunda simples — o plano é JSON puro. */
 const clonar = <T,>(valor: T): T => JSON.parse(JSON.stringify(valor)) as T;
 
-/** Cronômetro de descanso — fixo no rodapé enquanto estiver rodando. */
-const CronometroDescanso: React.FC<{
+/**
+ * Descanso em andamento. Só existe um por vez — entre séries ela descansa de um
+ * exercício de cada vez —, então o estado fica na página e é exibido em dois
+ * lugares: inline no card do exercício e na barra fixa do rodapé.
+ */
+interface Descanso {
+  exId: string;
+  nome: string;
+  total: number;
+  restante: number;
+  rodando: boolean;
+}
+
+/** Bolinha verde pulsante — sinal de "pode ir para a próxima série". */
+const SinalVerde: React.FC<{ tamanho?: string }> = ({ tamanho = 'h-2.5 w-2.5' }) => (
+  <span className={`relative flex shrink-0 ${tamanho}`}>
+    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-nature-500 opacity-75" />
+    <span className={`relative inline-flex rounded-full bg-nature-600 ${tamanho}`} />
+  </span>
+);
+
+/** Controle de descanso que fica no lugar do badge "Descanso 75s" do card. */
+const BadgeDescanso: React.FC<{
   segundos: number;
+  descanso: Descanso | null;
+  onIniciar: () => void;
+  onAlternarPausa: () => void;
+  onReiniciar: () => void;
   onFechar: () => void;
-}> = ({ segundos, onFechar }) => {
-  const [restante, setRestante] = useState(segundos);
-  const [rodando, setRodando] = useState(true);
-  const inicial = useRef(segundos);
+}> = ({ segundos, descanso, onIniciar, onAlternarPausa, onReiniciar, onFechar }) => {
+  const botao = 'rounded-full p-1 transition-colors';
 
-  // Novo descanso disparado por outro exercício: reinicia a contagem.
-  useEffect(() => {
-    inicial.current = segundos;
-    setRestante(segundos);
-    setRodando(true);
-  }, [segundos]);
-
-  useEffect(() => {
-    if (!rodando || restante <= 0) return;
-    const t = setTimeout(() => setRestante((r) => r - 1), 1000);
-    return () => clearTimeout(t);
-  }, [rodando, restante]);
-
-  const acabou = restante <= 0;
-
-  return (
-    <div className="fixed inset-x-0 bottom-0 z-30 md:pl-64">
-      <div className="mx-auto max-w-3xl m-3 rounded-2xl bg-secondary-500 text-white shadow-xl px-4 py-3 flex items-center gap-3">
-        <Timer className={`h-5 w-5 shrink-0 ${acabou ? 'text-accent-500' : 'text-nature-500'}`} />
-        <div className="min-w-0 flex-1">
-          <p className="text-xs text-secondary-200">
-            {acabou ? 'Descanso concluído — bora para a próxima série' : 'Descanso'}
-          </p>
-          <p className="font-serif text-2xl tabular-nums leading-tight">
-            {formatarTempo(Math.max(restante, 0))}
-          </p>
-        </div>
-        {!acabou && (
-          <button
-            onClick={() => setRodando((r) => !r)}
-            className="rounded-lg bg-secondary-600 p-2.5 hover:bg-secondary-700"
-            aria-label={rodando ? 'Pausar' : 'Retomar'}
-          >
-            {rodando ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-          </button>
-        )}
+  if (!descanso) {
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary-50 py-1 pl-2.5 pr-1 font-semibold text-secondary-500">
+        Descanso {segundos}s
         <button
-          onClick={() => {
-            setRestante(inicial.current);
-            setRodando(true);
-          }}
-          className="rounded-lg bg-secondary-600 p-2.5 hover:bg-secondary-700"
-          aria-label="Reiniciar descanso"
+          onClick={onIniciar}
+          aria-label={`Iniciar descanso de ${segundos} segundos`}
+          className={`${botao} bg-secondary-500 text-white hover:bg-secondary-600`}
         >
-          <RotateCcw className="h-4 w-4" />
+          <Play className="h-3 w-3" />
+        </button>
+      </span>
+    );
+  }
+
+  if (descanso.restante <= 0) {
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-nature-400 bg-nature-100 py-1 pl-2.5 pr-1 font-semibold text-nature-800">
+        <SinalVerde />
+        Pode ir!
+        <button
+          onClick={onReiniciar}
+          aria-label="Descansar de novo"
+          className={`${botao} text-nature-700 hover:bg-nature-200`}
+        >
+          <RotateCcw className="h-3 w-3" />
         </button>
         <button
           onClick={onFechar}
-          className="rounded-lg px-3 py-2 text-sm font-semibold text-secondary-200 hover:text-white"
+          aria-label="Encerrar descanso"
+          className={`${botao} text-nature-700 hover:bg-nature-200`}
         >
-          Fechar
+          <X className="h-3 w-3" />
         </button>
+      </span>
+    );
+  }
+
+  return (
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary-500 py-1 pl-2.5 pr-1 font-semibold text-white">
+      <Timer className="h-3.5 w-3.5 text-nature-400" />
+      <span className="tabular-nums">{formatarTempo(descanso.restante)}</span>
+      <button
+        onClick={onAlternarPausa}
+        aria-label={descanso.rodando ? 'Pausar descanso' : 'Retomar descanso'}
+        className={`${botao} hover:bg-secondary-600`}
+      >
+        {descanso.rodando ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
+      </button>
+      <button
+        onClick={onReiniciar}
+        aria-label="Reiniciar descanso"
+        className={`${botao} hover:bg-secondary-600`}
+      >
+        <RotateCcw className="h-3 w-3" />
+      </button>
+    </span>
+  );
+};
+
+/** Barra fixa no rodapé: mantém o descanso visível mesmo com a tela rolada. */
+const BarraDescanso: React.FC<{
+  descanso: Descanso;
+  onAlternarPausa: () => void;
+  onReiniciar: () => void;
+  onFechar: () => void;
+}> = ({ descanso, onAlternarPausa, onReiniciar, onFechar }) => {
+  const acabou = descanso.restante <= 0;
+  const progresso = descanso.total > 0 ? (descanso.restante / descanso.total) * 100 : 0;
+
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-30 md:pl-64">
+      <div
+        className={`mx-auto max-w-3xl m-3 overflow-hidden rounded-2xl shadow-xl ${
+          acabou ? 'bg-nature-600' : 'bg-secondary-500'
+        } text-white`}
+      >
+        <div className="flex items-center gap-3 px-4 py-3">
+          {acabou ? (
+            <SinalVerde tamanho="h-3 w-3" />
+          ) : (
+            <Timer className="h-5 w-5 shrink-0 text-nature-400" />
+          )}
+          <div className="min-w-0 flex-1">
+            <p className={`truncate text-xs ${acabou ? 'text-nature-100' : 'text-secondary-200'}`}>
+              {acabou ? 'Pode ir para a próxima série' : `Descansando · ${descanso.nome}`}
+            </p>
+            <p className="font-serif text-2xl tabular-nums leading-tight">
+              {formatarTempo(Math.max(descanso.restante, 0))}
+            </p>
+          </div>
+          {!acabou && (
+            <button
+              onClick={onAlternarPausa}
+              className="rounded-lg bg-secondary-600 p-2.5 hover:bg-secondary-700"
+              aria-label={descanso.rodando ? 'Pausar' : 'Retomar'}
+            >
+              {descanso.rodando ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+            </button>
+          )}
+          <button
+            onClick={onReiniciar}
+            className={`rounded-lg p-2.5 ${
+              acabou ? 'bg-nature-700 hover:bg-nature-800' : 'bg-secondary-600 hover:bg-secondary-700'
+            }`}
+            aria-label="Reiniciar descanso"
+          >
+            <RotateCcw className="h-4 w-4" />
+          </button>
+          <button
+            onClick={onFechar}
+            className={`rounded-lg px-3 py-2 text-sm font-semibold ${
+              acabou ? 'text-nature-100 hover:text-white' : 'text-secondary-200 hover:text-white'
+            }`}
+          >
+            Fechar
+          </button>
+        </div>
+        {!acabou && (
+          <div className="h-1 w-full bg-secondary-600">
+            <div
+              className="h-full bg-nature-500 transition-all duration-1000 ease-linear"
+              style={{ width: `${progresso}%` }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -107,16 +204,37 @@ const CardExercicio: React.FC<{
   indice: number | string;
   concluido: boolean;
   carga: string;
+  descanso: Descanso | null;
   onAlternar: () => void;
   onCarga: (v: string) => void;
-  onDescansar: () => void;
-}> = ({ ex, indice, concluido, carga, onAlternar, onCarga, onDescansar }) => {
+  onIniciarDescanso: () => void;
+  onAlternarPausa: () => void;
+  onReiniciarDescanso: () => void;
+  onFecharDescanso: () => void;
+}> = ({
+  ex,
+  indice,
+  concluido,
+  carga,
+  descanso,
+  onAlternar,
+  onCarga,
+  onIniciarDescanso,
+  onAlternarPausa,
+  onReiniciarDescanso,
+  onFecharDescanso,
+}) => {
   const [aberto, setAberto] = useState(false);
+  const pronto = descanso !== null && descanso.restante <= 0;
 
   return (
     <div
       className={`rounded-2xl border p-4 transition-colors ${
-        concluido ? 'border-nature-300 bg-nature-50' : 'border-secondary-100 bg-white'
+        pronto
+          ? 'border-nature-400 bg-nature-50'
+          : concluido
+            ? 'border-nature-300 bg-nature-50'
+            : 'border-secondary-100 bg-white'
       }`}
     >
       <div className="flex items-start gap-3">
@@ -148,9 +266,14 @@ const CardExercicio: React.FC<{
             <span className="rounded-full bg-secondary-500 px-2.5 py-1 font-semibold text-white">
               {ex.series} × {ex.reps}
             </span>
-            <span className="rounded-full bg-secondary-50 px-2.5 py-1 font-semibold text-secondary-500">
-              Descanso {ex.descanso}s
-            </span>
+            <BadgeDescanso
+              segundos={ex.descanso}
+              descanso={descanso}
+              onIniciar={onIniciarDescanso}
+              onAlternarPausa={onAlternarPausa}
+              onReiniciar={onReiniciarDescanso}
+              onFechar={onFecharDescanso}
+            />
             <span className="rounded-full bg-secondary-50 px-2.5 py-1 font-semibold text-secondary-500">
               RIR {ex.rir}
             </span>
@@ -170,12 +293,6 @@ const CardExercicio: React.FC<{
                 className="w-24 rounded-lg border border-secondary-200 px-2.5 py-1.5 text-sm text-secondary-700 focus:border-secondary-500 focus:outline-none focus:ring-1 focus:ring-secondary-500"
               />
             </label>
-            <button
-              onClick={onDescansar}
-              className="flex items-center gap-1.5 rounded-lg border border-secondary-200 px-3 py-1.5 text-xs font-semibold text-secondary-600 hover:bg-secondary-50"
-            >
-              <Timer className="h-3.5 w-3.5" /> Descansar {ex.descanso}s
-            </button>
             {ex.dica && (
               <button
                 onClick={() => setAberto((a) => !a)}
@@ -210,8 +327,7 @@ const Fitness: React.FC = () => {
   const [treinoId, setTreinoId] = useState<string>(PLANO_PADRAO[0].id);
   const [concluidos, setConcluidos] = useState<string[]>([]);
   const [cargas, setCargas] = useState<Record<string, string>>({});
-  // Chave numérica para reiniciar o cronômetro mesmo repetindo o mesmo descanso.
-  const [descanso, setDescanso] = useState<{ segundos: number; chave: number } | null>(null);
+  const [descanso, setDescanso] = useState<Descanso | null>(null);
 
   // Edição
   const [editando, setEditando] = useState(false);
@@ -241,6 +357,39 @@ const Fitness: React.FC = () => {
     setConcluidos(fitnessStorage.lerConcluidos(treinoId));
   }, [treinoId]);
 
+  // --- cronômetro de descanso ---------------------------------------------
+  useEffect(() => {
+    if (!descanso || !descanso.rodando || descanso.restante <= 0) return;
+    const t = setTimeout(
+      () => setDescanso((d) => (d && d.rodando && d.restante > 0 ? { ...d, restante: d.restante - 1 } : d)),
+      1000
+    );
+    return () => clearTimeout(t);
+  }, [descanso]);
+
+  const descansoAcabou = descanso !== null && descanso.restante <= 0;
+
+  // Vibra ao zerar: na academia o celular costuma estar no bolso ou no banco.
+  useEffect(() => {
+    if (descansoAcabou && typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+      navigator.vibrate([180, 90, 180]);
+    }
+  }, [descansoAcabou, descanso?.exId]);
+
+  const iniciarDescanso = (ex: Exercicio | ExercicioAbs) =>
+    setDescanso({
+      exId: ex.id,
+      nome: ex.nome || 'Exercício',
+      total: ex.descanso,
+      restante: ex.descanso,
+      rodando: true,
+    });
+
+  const alternarPausa = () => setDescanso((d) => (d ? { ...d, rodando: !d.rodando } : d));
+  const reiniciarDescanso = () =>
+    setDescanso((d) => (d ? { ...d, restante: d.total, rodando: true } : d));
+  const fecharDescanso = () => setDescanso(null);
+
   const listaAtiva = editando ? rascunho : plano;
   const treino = useMemo(
     () => listaAtiva.find((t) => t.id === treinoId) ?? listaAtiva[0],
@@ -268,6 +417,7 @@ const Fitness: React.FC = () => {
   // --- edição -------------------------------------------------------------
   const abrirEdicao = () => {
     setRascunho(clonar(plano));
+    setDescanso(null);
     setErro(null);
     setEditando(true);
   };
@@ -328,6 +478,15 @@ const Fitness: React.FC = () => {
   const total = todos.length || 1;
   const percentual = Math.round((feitos / total) * 100);
 
+  /** Props de descanso do card — só o exercício em descanso recebe o estado. */
+  const propsDescanso = (ex: Exercicio | ExercicioAbs) => ({
+    descanso: descanso?.exId === ex.id ? descanso : null,
+    onIniciarDescanso: () => iniciarDescanso(ex),
+    onAlternarPausa: alternarPausa,
+    onReiniciarDescanso: () => (descanso?.exId === ex.id ? reiniciarDescanso() : iniciarDescanso(ex)),
+    onFecharDescanso: fecharDescanso,
+  });
+
   if (carregando) {
     return (
       <div className="flex justify-center py-12">
@@ -337,7 +496,7 @@ const Fitness: React.FC = () => {
   }
 
   return (
-    <div className={`space-y-6 ${descanso ? 'pb-28' : ''}`}>
+    <div className={`space-y-6 ${descanso && !editando ? 'pb-28' : ''}`}>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="font-serif text-2xl text-secondary-600">Fitness</h1>
@@ -534,7 +693,7 @@ const Fitness: React.FC = () => {
                 carga={cargas[ex.id] ?? ''}
                 onAlternar={() => alternar(ex.id)}
                 onCarga={(v) => definirCarga(ex.id, v)}
-                onDescansar={() => setDescanso({ segundos: ex.descanso, chave: Date.now() })}
+                {...propsDescanso(ex)}
               />
             ))}
           </div>
@@ -557,9 +716,7 @@ const Fitness: React.FC = () => {
               carga={cargas[treino.abdomen.id] ?? ''}
               onAlternar={() => alternar(treino.abdomen.id)}
               onCarga={(v) => definirCarga(treino.abdomen.id, v)}
-              onDescansar={() =>
-                setDescanso({ segundos: treino.abdomen.descanso, chave: Date.now() })
-              }
+              {...propsDescanso(treino.abdomen)}
             />
           </div>
 
@@ -588,10 +745,11 @@ const Fitness: React.FC = () => {
       )}
 
       {descanso && !editando && (
-        <CronometroDescanso
-          key={descanso.chave}
-          segundos={descanso.segundos}
-          onFechar={() => setDescanso(null)}
+        <BarraDescanso
+          descanso={descanso}
+          onAlternarPausa={alternarPausa}
+          onReiniciar={reiniciarDescanso}
+          onFechar={fecharDescanso}
         />
       )}
     </div>
