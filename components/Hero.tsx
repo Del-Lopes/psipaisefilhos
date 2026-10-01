@@ -31,12 +31,12 @@ const Hero: React.FC = () => {
               <Sparkles size={18} className="text-accent-500" />
               <span>Psicóloga Bárbara Carvalho</span>
               <span className="text-secondary-400 font-normal">|</span>
-              <span className="text-primary-700">CRP 06/XXXXXX</span>
+              <span className="text-primary-700">CRP 06/187233</span>
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-secondary-500 leading-[1.1] font-serif">
               Acolhendo o <span className="text-primary-500 italic">Desenvolvimento</span> <br />
-              com Amor e <span className="text-accent-500">Alegria</span>.
+              com Amor e <span className="text-accent-500">Ciência</span>.
             </h1>
             
             <p className="text-lg md:text-xl text-secondary-400 max-w-xl leading-relaxed font-medium">
