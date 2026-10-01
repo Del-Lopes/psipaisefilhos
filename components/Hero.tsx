@@ -27,9 +27,11 @@ const Hero: React.FC = () => {
           
           {/* Text Content */}
           <div className="space-y-8 text-left order-2 lg:order-1">
-            <div className="inline-flex items-center gap-2 bg-nature-100 text-secondary-500 px-5 py-2 rounded-full text-sm font-bold tracking-wide border border-nature-200 animate-fade-in">
+            <div className="inline-flex flex-wrap items-center gap-2 bg-nature-100 text-secondary-500 px-5 py-2 rounded-full text-sm font-bold tracking-wide border border-nature-200 animate-fade-in">
               <Sparkles size={18} className="text-accent-500" />
-              Cuidado que floresce, futuro que brilha
+              <span>Psicóloga Bárbara Carvalho</span>
+              <span className="text-secondary-400 font-normal">|</span>
+              <span className="text-primary-700">CRP 06/XXXXXX</span>
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-secondary-500 leading-[1.1] font-serif">
@@ -38,7 +40,7 @@ const Hero: React.FC = () => {
             </h1>
             
             <p className="text-lg md:text-xl text-secondary-400 max-w-xl leading-relaxed font-medium">
-              Especialista em Psicologia Infantil, transformando o desenvolvimento do seu filho através de um olhar lúdico, acolhedor e baseado em evidências.
+              Atuação dedicada à Psicologia Infantil, apoiando o desenvolvimento do seu filho através de um olhar lúdico, acolhedor e fundamentado na ciência.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-5 pt-4">

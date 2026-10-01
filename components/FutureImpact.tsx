@@ -16,10 +16,10 @@ const FutureImpact: React.FC = () => {
           
           <div className="space-y-8 text-lg md:text-xl text-secondary-200 leading-relaxed font-light">
             <p>
-              A infância não é apenas uma fase de passagem; é o alicerce de toda a existência. O investimento emocional realizado hoje é a prevenção direta contra lacunas profundas no futuro. Adultos seguros, resilientes e profissionalmente realizados são, invariavelmente, crianças que tiveram suas emoções validadas e suas dificuldades acolhidas no momento certo.
+              A infância é uma etapa fundamental na formação emocional e social do indivíduo. O acolhimento e o apoio oferecidos nesta fase favorecem o desenvolvimento de crianças mais autônomas, capacitadas para lidar com desafios e construir relacionamentos saudáveis ao longo da vida.
             </p>
             <p>
-              Ignorar os sinais de alerta na infância pode resultar em "travas" silenciosas na vida adulta: dificuldades em manter relacionamentos saudáveis, insegurança crônica na carreira e ansiedade generalizada. A intervenção precoce é um ato de amor que reescreve a narrativa de vida do seu filho, entregando a ele as chaves para um futuro pleno e autônomo.
+              Observar com atenção os sinais do desenvolvimento e buscar acompanhamento profissional no momento adequado permite acolher necessidades específicas de forma preventiva. A intervenção no tempo certo fortalece os recursos emocionais da criança, promovendo sua autonomia e bem-estar.
             </p>
           </div>
 

@@ -4,33 +4,33 @@ import { Pillar } from '../types';
 
 const pillarsData: Pillar[] = [
   {
-    title: "Liberação de Traumas",
-    subtitle: "O peso que a criança não precisa carregar",
-    description: "Crianças também vivenciam lutos, medos e rupturas. A terapia oferece um espaço seguro para ressignificar essas dores, impedindo que se tornem bloqueios emocionais permanentes.",
+    title: "Acolhimento de Traumas",
+    subtitle: "Espaço seguro de escuta e acolhimento",
+    description: "Crianças também vivenciam lutos, medos e rupturas. A terapia oferece um espaço acolhedor para ressignificar essas vivências e desenvolver recursos emocionais.",
     icon: ShieldCheck
   },
   {
-    title: "Desbloqueio de Habilidades",
-    subtitle: "Potencializando talentos escondidos",
-    description: "Muitas vezes, a insegurança mascara a genialidade. Trabalhamos para fortalecer a autoestima e a autonomia, permitindo que seu filho explore todo o seu potencial cognitivo e social.",
+    title: "Desenvolvimento de Habilidades",
+    subtitle: "Fortalecendo o potencial e a autonomia",
+    description: "Trabalhamos para fortalecer a autoestima e a autoconfiança, auxiliando a criança a explorar e desenvolver seu potencial cognitivo, afetivo e social.",
     icon: Brain
   },
   {
-    title: "Resolução de Transtornos",
-    subtitle: "O suporte técnico em neurodivergências",
-    description: "Identificação e manejo técnico de sinais de TEA, TDAH e outros transtornos. O objetivo não é rotular, mas oferecer as ferramentas adaptativas corretas para que a criança floresça.",
+    title: "Suporte em Neurodivergências",
+    subtitle: "Acompanhamento técnico e individualizado",
+    description: "Acompanhamento e suporte terapêutico em demandas como TEA, TDAH e outras neurodivergências. O objetivo é oferecer estratégias adaptativas que favoreçam o bem-estar e o desenvolvimento.",
     icon: HeartHandshake
   },
   {
     title: "Questões Comportamentais",
-    subtitle: "Equilíbrio entre amor e limites",
-    description: "Disciplina não é punição, é ensino. Ajudamos pais e filhos a construírem uma rotina onde o respeito mútuo prevalece sobre as birras, a agressividade ou o isolamento.",
+    subtitle: "Equilíbrio entre afeto e limites",
+    description: "Orientação e suporte para construir uma rotina baseada no respeito mútuo, comunicação clara e cooperação no ambiente familiar.",
     icon: Scale
   },
   {
     title: "Manejo de Emoções",
-    subtitle: "Alfabetização emocional",
-    description: "Ensinar a criança a nomear e gerenciar o que sente (raiva, frustração, euforia) é o maior presente que se pode dar para seu futuro sucesso pessoal e profissional.",
+    subtitle: "Desenvolvimento socioemocional",
+    description: "Auxiliar a criança a reconhecer, nomear e expressar suas emoções (como raiva, frustração e medo) de maneira saudável e construtiva.",
     icon: Smile
   }
 ];
@@ -44,10 +44,10 @@ const Pillars: React.FC = () => {
             Por que buscar terapia?
           </h2>
           <h3 className="text-3xl md:text-4xl font-serif font-bold text-secondary-500 mb-6">
-            As 5 Colunas do Desenvolvimento Infantil
+            Eixos do Acompanhamento Psicológico
           </h3>
           <p className="text-secondary-500 text-lg">
-            A infância é a janela de oportunidade mais crítica da vida. Atuamos em cinco frentes essenciais para garantir um crescimento saudável.
+            A infância é uma etapa rica em descobertas e aprendizados. Atuamos em frentes essenciais para promover a saúde emocional e a qualidade de vida.
           </p>
         </div>
 

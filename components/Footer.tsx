@@ -16,9 +16,12 @@ const Footer: React.FC = () => {
              </div>
              <h4 className="text-2xl font-serif font-bold text-white">Bárbara Carvalho</h4>
           </div>
-          <p className="text-sm leading-relaxed opacity-80 mb-6">
+          <p className="text-sm leading-relaxed opacity-80 mb-2">
             Psicologia Infantil e Neurodivergências.<br/>
             Cuidado ético, técnico e humanizado para o desenvolvimento do seu filho.
+          </p>
+          <p className="text-xs font-semibold text-primary-300 mb-6">
+            CRP 06/XXXXXX
           </p>
           <div className="flex gap-4">
             <a href="#" className="hover:text-primary-500 transition-colors"><Instagram size={20} /></a>
@@ -52,13 +55,14 @@ const Footer: React.FC = () => {
               <li><a href="#hero" className="hover:text-primary-500 transition-colors">Início</a></li>
               <li><a href="#pillars" className="hover:text-primary-500 transition-colors">Desenvolvimento</a></li>
               <li><a href="#specialty" className="hover:text-primary-500 transition-colors">Neurodivergências</a></li>
-              <li><a href="#bio" className="hover:text-primary-500 transition-colors">Sobre Nós</a></li>
+              <li><a href="#bio" className="hover:text-primary-500 transition-colors">Sobre a Psicóloga</a></li>
           </ul>
         </div>
 
       </div>
-      <div className="border-t border-secondary-800 mt-12 pt-8 text-center text-xs opacity-40">
-        &copy; {new Date().getFullYear()} Bárbara Carvalho. Todos os direitos reservados.
+      <div className="border-t border-secondary-800 mt-12 pt-8 text-center text-xs opacity-60 space-y-1">
+        <p>&copy; {new Date().getFullYear()} Bárbara Carvalho — Psicóloga (CRP 06/XXXXXX). Todos os direitos reservados.</p>
+        <p className="opacity-75">Atendimentos em conformidade com o Código de Ética Profissional do Psicólogo (Resolução CFP nº 010/2005).</p>
       </div>
     </footer>
   );

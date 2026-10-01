@@ -18,8 +18,8 @@ const Navigation: React.FC = () => {
   const navLinks = [
     { label: 'Início', href: '/#hero' },
     { label: 'Desenvolvimento', href: '/#pillars' },
-    { label: 'Especialidade', href: '/#specialty' },
-    { label: 'Sobre Nós', href: '/#bio' },
+    { label: 'Atuação', href: '/#specialty' },
+    { label: 'Sobre', href: '/#bio' },
   ];
 
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {

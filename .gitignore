@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Acervo de carrosséis do Instagram (imagens pesadas)
+instagram-carrosseis/
