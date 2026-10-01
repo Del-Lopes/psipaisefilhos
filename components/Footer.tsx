@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
             Cuidado ético, técnico e humanizado para o desenvolvimento do seu filho.
           </p>
           <p className="text-xs font-semibold text-primary-300 mb-6">
-            CRP 06/XXXXXX
+            CRP 06/187233
           </p>
           <div className="flex gap-4">
             <a href="#" className="hover:text-primary-500 transition-colors"><Instagram size={20} /></a>
@@ -61,7 +61,7 @@ const Footer: React.FC = () => {
 
       </div>
       <div className="border-t border-secondary-800 mt-12 pt-8 text-center text-xs opacity-60 space-y-1">
-        <p>&copy; {new Date().getFullYear()} Bárbara Carvalho — Psicóloga (CRP 06/XXXXXX). Todos os direitos reservados.</p>
+        <p>&copy; {new Date().getFullYear()} Bárbara Carvalho — Psicóloga (CRP 06/187233). Todos os direitos reservados.</p>
         <p className="opacity-75">Atendimentos em conformidade com o Código de Ética Profissional do Psicólogo (Resolução CFP nº 010/2005).</p>
       </div>
     </footer>

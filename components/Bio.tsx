@@ -20,7 +20,7 @@ const Bio: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent md:hidden"></div>
             <div className="absolute bottom-6 left-6 text-white md:hidden">
               <p className="font-bold text-xl uppercase tracking-wider">Bárbara Carvalho</p>
-              <p className="text-sm opacity-90">Psicóloga | CRP 06/XXXXXX</p>
+              <p className="text-sm opacity-90">Psicóloga | CRP 06/187233</p>
             </div>
           </div>
 
@@ -32,7 +32,7 @@ const Bio: React.FC = () => {
             <h3 className="text-primary-700 font-bold mb-6 uppercase tracking-wider text-sm flex items-center gap-2">
               <span>Psicóloga</span>
               <span>•</span>
-              <span>CRP 06/XXXXXX</span>
+              <span>CRP 06/187233</span>
             </h3>
 
             <div className="space-y-5 text-secondary-500 leading-relaxed text-base">
