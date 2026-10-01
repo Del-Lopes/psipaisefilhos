@@ -10,7 +10,7 @@ const Bio: React.FC = () => {
           {/* Photo Section */}
           <div className="md:w-2/5 relative min-h-[400px]">
             <img 
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800"
+              src="/Profile.png"
               alt="Psicóloga Bárbara Carvalho" 
               className="absolute inset-0 w-full h-full object-cover object-top"
               onError={(e) => {
