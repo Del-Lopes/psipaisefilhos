@@ -4,7 +4,7 @@ A responsive professional website created for a psychology practice focused on c
 
 ## Overview
 
-The project provides an accessible digital presence with informational sections, professional positioning and conversion-focused calls to action.
+The project provides an accessible digital presence with informational content, professional positioning and conversion-focused calls to action.
 
 ## Features
 
@@ -24,6 +24,15 @@ The project provides an accessible digital presence with informational sections,
 - Supabase
 - PWA tooling
 
+## Engineering Focus
+
+- Responsive and accessible user experience
+- Content-oriented information architecture
+- Conversion-focused calls to action
+- PWA capabilities
+- Backend-service integration
+- Production deployment workflow
+
 ## Development
 
 ~~~bash
@@ -41,6 +50,8 @@ npm run build
 
 The application is configured for Vercel deployment.
 
-## Portfolio Note
+## Portfolio Notes
 
-This is a client-oriented project. The source code should only be made public with the client's authorization and after removing any private data, credentials or restricted assets.
+This is a client-oriented project that demonstrates delivery of a production website for a real professional service.
+
+Public availability of the source should comply with client authorization, privacy requirements and the licensing terms of any third-party assets.
