@@ -1,42 +1,46 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Psi Bárbara Carvalho — Psychology Website
 
-# Psi Bárbara Carvalho - Psicologia Infantil e Parental
+A responsive professional website created for a psychology practice focused on child development and conscious parenting.
 
-Website profissional para **Psi Bárbara Carvalho**, focado no apoio ao desenvolvimento infantil e parentalidade consciente.
+## Overview
 
-## Funcionalidades
-- **Design Moderno:** Interface acolhedora e responsiva.
-- **Seções Informativas:** Pilares de desenvolvimento, especialidades e biografia.
-- **Chamadas para Ação (CTA):** Integração para agendamento via WhatsApp.
-- **Performance:** Construído com Vite + React + Tailwind CSS.
+The project provides an accessible digital presence with informational sections, professional positioning and conversion-focused calls to action.
 
-## Como Iniciar Localmente
+## Features
 
-### Pré-requisitos
-- **Node.js** (v18 ou superior recomendado)
+- Responsive professional website
+- Informational content sections
+- Professional biography and specialties
+- WhatsApp scheduling CTA
+- PWA support
+- Supabase integration
 
-### Passos
-1. Instale as dependências:
-   ```bash
-   npm install
-   ```
-2. Inicie o servidor de desenvolvimento:
-   ```bash
-   npm run dev
-   ```
-3. Acesse em: `http://localhost:5173`
+## Tech Stack
 
-## Build para Produção
-Para gerar a versão otimizada para deploy:
-```bash
+- React
+- TypeScript
+- Vite
+- React Router
+- Supabase
+- PWA tooling
+
+## Development
+
+~~~bash
+npm install
+npm run dev
+~~~
+
+## Production Build
+
+~~~bash
 npm run build
-```
+~~~
 
-## Deploy (Vercel)
-Este projeto está configurado para deploy automático na Vercel quando conectado ao GitHub.
-- **Build Command:** `npm run build`
-- **Output Directory:** `dist`
-- **Install Command:** `npm install`
+## Deployment
 
+The application is configured for Vercel deployment.
+
+## Portfolio Note
+
+This is a client-oriented project. The source code should only be made public with the client's authorization and after removing any private data, credentials or restricted assets.
